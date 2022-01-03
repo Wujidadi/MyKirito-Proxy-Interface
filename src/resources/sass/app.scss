@@ -1,2 +1,54 @@
 @import 'env';
 @import 'bootstrap/scss/bootstrap';
+@import 'variables';
+@import 'dark';
+
+body {
+    nav.navbar {
+        position: fixed;
+        top: 0px;
+        z-index: 999;
+        width: 100%;
+        padding: 0px 5%;
+        margin: {
+            bottom: 18px;
+        }
+        background-color: $primary-bg-color;
+        -webkit-box-align: center;
+        align-items: center;
+        box: {
+            sizing: border-box;
+            shadow: rgb(0 0 0 / 30%) 0px 2px 4px;
+        }
+
+        a.nav-link {
+            background-color: $primary-bg-color;
+            color: $primary-fg-color;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            height: 48px;
+            padding: 0px 8px;
+            transition: all 0.16s ease 0s;
+
+            &.final {
+                margin-left: auto;
+                cursor: pointer;
+            }
+
+            &:hover {
+                text-decoration: none;
+            }
+            &:not(.active) {
+                &:hover {
+                    background-color: transparentize($primary-fg-color, 0.8);
+                }
+            }
+
+            &.active {
+                background-color: $primary-fg-color;
+                color: $primary-bg-color;
+            }
+        }
+    }
+}

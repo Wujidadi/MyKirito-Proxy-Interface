@@ -1,0 +1,9 @@
+@import 'variables';
+
+$_fg-color: #ddd;
+$_bg-color: #111;
+
+body.dark {
+    background-color: $_bg-color;
+    color: $_fg-color;
+}
