@@ -1,0 +1,60 @@
+version: '3.9'
+
+services:
+    main:
+        build:
+            context: ./build/extend
+            dockerfile: Dockerfile
+        image: ${COMPOSE_PROJECT_NAME}/main
+        container_name: ${CONTAINER_NAME_PREFIX}-Main
+        hostname: ${CONTAINER_HOST_PREFIX}-main
+        environment:
+            - CHOKIDAR_USEPOLLING=true  # Enable Octane --watch working
+        volumes:
+            - ${VOLUME_MAIN}:${CONTAINER_WORKDIR_MAIN}
+            - ./config/nginx/nginx.conf:/etc/nginx/sites-available/default
+            - ./config/supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+            - ./config/php/php.ini:/etc/php/${PHP_VERSION}/cli/conf.d/99-my.ini
+        networks:
+            dockernet:
+                ipv4_address: ${IPV4_MAIN}
+        ports:
+            - ${PORT_MAIN:-80}:80
+            - ${PORT_MAIN_OCTANE:-8000}:8000  # Port assigned in supervisord.conf has higher priority
+        working_dir: ${CONTAINER_WORKDIR_MAIN}
+        command: >
+            bash -c "cron start;
+            supervisord -c /etc/supervisor/conf.d/supervisord.conf;
+            nginx -g 'daemon off;'"
+        restart: unless-stopped
+        # depends_on:
+        #     - postgresql
+
+    # postgresql:
+    #     image: postgres:${DOCKER_IMAGE_VERSION_POSTGRESQL}
+    #     container_name: ${CONTAINER_NAME_PREFIX}-PostgreSQL
+    #     hostname: ${CONTAINER_HOST_PREFIX}-postgresql
+    #     environment:
+    #         - POSTGRES_USER=${DB_USERNAME}
+    #         - POSTGRES_PASSWORD=${DB_PASSWORD}
+    #         - POSTGRES_DB=${DB_NAME}
+    #         - TZ=${POSTGRESQL_TIMEZONE}
+    #         - PGTZ=${POSTGRESQL_TIMEZONE}
+    #     volumes:
+    #         - ${VOLUME_POSTGRESQL}:/var/lib/postgresql/data
+    #     networks:
+    #         dockernet:
+    #             ipv4_address: ${IPV4_POSTGRESQL}
+    #     ports:
+    #         - '${PORT_POSTGRESQL}:5432'
+    #     restart: unless-stopped
+
+networks:
+    dockernet:
+        driver: bridge
+        name: ${NETWORK_NAME}
+        ipam:
+            config:
+                - subnet: ${NETWORK_SUBNET}
+    share:
+        name: ${SHARING_NETWORK_NAME}

@@ -1,0 +1,27 @@
+#!/usr/bin/env php
+<?php
+
+chdir(__DIR__);
+
+require_once './env.php';
+require_once './volumes.php';
+
+$command = 'docker-compose up -d';
+
+$options = getopt('', ['force'], $optind);
+
+/* Force recreate */
+if (isset($options['force'])) {
+    $command .= ' --force-recreate';
+}
+
+/* Services */
+for ($i = $optind; $i < $argc; $i++) {
+    if (!preg_match('/^-/', $argv[$i])) {
+        $command .= " {$argv[$i]}";
+    }
+}
+
+system($command);
+
+exit(0);

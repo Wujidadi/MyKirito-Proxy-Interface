@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+chdir(__DIR__);
+
+$command = 'docker-compose stop';
+
+$options = getopt('', [], $optind);
+
+/* Services */
+for ($i = $optind; $i < $argc; $i++) {
+    if (!preg_match('/^-/', $argv[$i])) {
+        $command .= " {$argv[$i]}";
+    }
+}
+
+shell_exec($command);
+
+exit(0);
