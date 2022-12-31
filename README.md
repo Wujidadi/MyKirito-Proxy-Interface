@@ -15,4 +15,10 @@ php artisan key:generate
 # Go back to root and build Docker containers
 cd ..
 docker/build/up
+
+# Optional but recommended
+cd src
+php artisan ide-helper:generate
+php artisan ide-helper:models
+php artisan ide-helper:meta
 ```
