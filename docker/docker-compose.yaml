@@ -28,6 +28,20 @@ services:
             nginx -g 'daemon off;'"
         restart: unless-stopped
 
+    cache:
+        image: ${DOCKER_IMAGE_VERSION_CACHE}
+        container_name: ${CONTAINER_NAME_PREFIX}-Cache
+        hostname: ${CONTAINER_HOST_PREFIX}-cache
+        volumes:
+            - ${VOLUME_CACHE}:/data
+        networks:
+            default:
+                ipv4_address: ${IPV4_CACHE}
+        ports:
+            - ${PORT_CACHE:-6379}:6379
+        healthcheck:
+            test: ['CMD', 'redis-cli', 'ping']
+
 networks:
     default:
         driver: bridge

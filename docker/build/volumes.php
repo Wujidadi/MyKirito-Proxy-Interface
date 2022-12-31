@@ -3,7 +3,8 @@
 chdir(__DIR__);
 
 $dirs = [
-    //
+    '../../volumes',
+    '../../volumes/redis',
 ];
 
 foreach ($dirs as $dir) {
