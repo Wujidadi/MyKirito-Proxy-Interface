@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
  * @property string $section_3 Token第3段，變動值
  * @property Carbon $created_at 資料建立時間
  * @property Carbon $updated_at 最後更新時間
+ * @property string $token Token 玩家令牌
  */
 class PlayerTokens extends Model
 {
@@ -28,4 +29,9 @@ class PlayerTokens extends Model
         'created_at' => 'datetime:Y-m-d H:i:s.u',
         'updated_at' => 'datetime:Y-m-d H:i:s.u',
     ];
+
+    public function getTokenAttribute(): string
+    {
+        return $this->player_id . '.' . $this->section_2 . '.' . $this->section_3;
+    }
 }
