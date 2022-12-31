@@ -30,6 +30,9 @@ auth.json
 # PHPUnit
 .phpunit.result.cache
 
+# PHP CS Fixer
+.php-cs-fixer.cache
+
 # Homestead
 Homestead.json
 Homestead.yaml
