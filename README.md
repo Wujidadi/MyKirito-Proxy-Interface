@@ -5,9 +5,6 @@
 ## Quick Start
 
 ```bash
-# Run at root
-cp docker/.env.example docker/.env
-
 # Go to src and run Laravel initial commands
 cd src
 composer i

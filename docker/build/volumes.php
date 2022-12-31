@@ -3,8 +3,7 @@
 chdir(__DIR__);
 
 $dirs = [
-    // '../../volumes',
-    // '../../volumes/postgresql',
+    //
 ];
 
 foreach ($dirs as $dir) {
