@@ -37,7 +37,7 @@ class Decorator
 
     private function decorateReqBody(): void
     {
-        $this->arr['req_body'] = Unicode::escape(mb_convert_encoding($this->arr['req_body'], 'UTF-8'));
+        $this->arr['req_body'] = Unicode::unescape(mb_convert_encoding($this->arr['req_body'], 'UTF-8'));
     }
 
     private function decorateResBody(): void
@@ -48,6 +48,6 @@ class Decorator
         $type = $this->response->getHeader('content-type');
         $parsed = HttpHeader::parse($type);
         $from_encoding = Arr::get($parsed, '0.charset') ?: 'UTF-8';
-        $this->arr['res_body'] = Unicode::escape(mb_convert_encoding($this->arr['res_body'], 'UTF-8', $from_encoding));
+        $this->arr['res_body'] = Unicode::unescape(mb_convert_encoding($this->arr['res_body'], 'UTF-8', $from_encoding));
     }
 }
