@@ -8,7 +8,7 @@
         <router-link class="nav-link" to="/hall-of-fame">名人堂</router-link>
         <router-link class="nav-link" to="/reincarnation">轉生</router-link>
         <router-link class="nav-link" to="/reports">戰報</router-link>
-        <a class="nav-link final"><theme-switcher /></a>
+        <a class="nav-link final"><theme-switcher style="width: 28px;" /></a>
     </nav>
 </template>
 
