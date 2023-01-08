@@ -1,6 +1,6 @@
 import './bootstrap';
 
-import navbar from '@/js/components/forestage/navbar.vue';
+import navbar from './components/forestage/navbar.vue';
 
 const components = {
     navbar: navbar,

@@ -2,4 +2,5 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Http\Controllers\Forestage\HomeController::class, 'index']);
+Route::get('/{path}', [\App\Http\Controllers\Forestage\HomeController::class, 'index'])
+    ->where('path', '^((?!api).)*$');

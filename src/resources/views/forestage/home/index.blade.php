@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +9,9 @@
 <body class="dark">
     <div id="app">
         <navbar></navbar>
+        <div class="main">
+            <router-view></router-view>
+        </div>
     </div>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </body>
