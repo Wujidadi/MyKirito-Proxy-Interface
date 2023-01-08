@@ -1,5 +1,5 @@
 <template>
-    <div>這就是名人堂嗎</div>
+    <div>這就是名人堂嗎？</div>
 </template>
 
 <script>

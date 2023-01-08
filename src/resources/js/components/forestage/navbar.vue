@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import ThemeSwitcher from '@/assets/theme-switcher.svg';
+    import ThemeSwitcher from '@/assets/icons/theme-switcher.svg';
     export default {
         name: "Navbar",
         components: {
