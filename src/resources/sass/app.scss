@@ -4,11 +4,7 @@
 @import 'dark';
 
 body {
-    @import 'components/navbar';
-
     div.main {
-        margin-top: $navbar-height;
-
         table {
             caption {
                 display: none;
@@ -41,8 +37,6 @@ body {
                         font-weight: $h3-title-weight;
                         margin-bottom: $h3-title-margin-bottom;
                     }
-
-                    @import 'components/personal-info';
                 }
             }
         }
