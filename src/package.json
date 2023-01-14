@@ -1,4 +1,5 @@
 {
+    "name": "mykirito-proxy-interface",
     "private": true,
     "scripts": {
         "dev": "vite",
