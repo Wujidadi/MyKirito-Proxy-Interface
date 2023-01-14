@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "hallOfFamePage"
+        name: "HallOfFamePage"
     }
 </script>
 

@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "reincarnationPage"
+        name: "ReincarnationPage"
     }
 </script>
 

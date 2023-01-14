@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "reportsPage"
+        name: "ReportsPage"
     }
 </script>
 

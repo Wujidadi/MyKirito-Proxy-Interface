@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "achievementRankingPage"
+        name: "AchievementRankingPage"
     }
 </script>
 
