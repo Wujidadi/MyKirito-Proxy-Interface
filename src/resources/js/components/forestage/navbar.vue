@@ -29,12 +29,10 @@ export default {
 @import '@/sass/_variables.scss';
 
 nav.navbar {
-    position: fixed;
     top: 0;
     z-index: 999;
     width: 100%;
     padding: 0 5%;
-    margin-bottom: 18px;
     background-color: $primary-bg-color;
     -webkit-box-align: center;
     align-items: center;

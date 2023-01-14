@@ -5,6 +5,11 @@
 
 body {
     div.main {
+        margin: {
+            top: $main-page-top-gap;
+            bottom: 0;
+        }
+
         table {
             caption {
                 display: none;
@@ -22,7 +27,7 @@ body {
         }
 
         div.page {
-            margin: $navbar-height + $main-page-top-gap auto 0;
+            margin: auto;
             min-width: $min-content-width;
             max-width: $max-content-width;
 
