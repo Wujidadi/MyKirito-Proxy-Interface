@@ -3,6 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\PlayerTokens;
+use Illuminate\Database\Eloquent\Collection as DatabaseCollection;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 
 class PlayerTokenRepository
 {
@@ -27,5 +30,16 @@ class PlayerTokenRepository
             ->where('player_name', $name)
             ->first();
         return $player ? $player->token : null;
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function getAllTokens(): DatabaseCollection
+    {
+        return resolve(PlayerTokens::class)
+            ->select(['player_name', 'player_id', 'section_2', 'section_3'])
+            ->get();
     }
 }

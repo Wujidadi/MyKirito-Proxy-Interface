@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\PlayerTokenRepository;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Cache;
 
 class PlayerTokenService
@@ -11,7 +12,7 @@ class PlayerTokenService
 
     public function addPlayer(array $rawData)
     {
-        if (count($rawData) === 0) {
+        if (empty($rawData)) {
             return 0;
         }
 
@@ -55,5 +56,22 @@ class PlayerTokenService
             return $token;
         }
         return null;
+    }
+
+    /**
+     * TODO: 1. by 登入的使用者決定能 get 的玩家 token
+     *       2. 使用者可 get 的玩家流水號應記錄於快取
+     */
+    public function getPlayerTokens(): JsonResponse
+    {
+        $data = resolve(PlayerTokenRepository::class)->getAllTokens();
+        $array = [];
+        foreach ($data as $datum) {
+            $array[$datum->player_name] = [
+                'player_id' => $datum->player_id,
+                'token' => $datum->token,
+            ];
+        }
+        return response()->json($array, 200);
     }
 }
