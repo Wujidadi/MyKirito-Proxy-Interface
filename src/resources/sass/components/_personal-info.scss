@@ -1,0 +1,56 @@
+@use 'sass:math';
+
+#personalInfo {
+    $th-width: 14.28%;
+
+    th {
+        &.head-1, &.head-2 {
+            background-color: $th-bg-color;
+            width: $th-width;
+        }
+
+        &.ability {
+            background-color: $th-abil-bg-color;
+        }
+    }
+
+    td {
+        &.content-1, &.content-2 {
+            width: 50% - $th-width;
+        }
+
+        &.murder {
+            color: lightblue;
+        }
+
+        &.bot-lv {
+            color: aquamarine;
+        }
+
+        &.protection {
+            color: lightsalmon;
+        }
+
+        &.to-next-level {
+            color: yellow;
+        }
+
+        &.last-time {
+            color: thistle;
+        }
+    }
+
+    img.personal-info-avatar {
+        height: $personal-info-avatar-size;
+        width: $personal-info-avatar-size;
+    }
+
+    tr.beside-avatar {
+        $avatar-rowspan: 3;
+        $row-margin: 9.5;
+
+        th, td {
+            height: math.div($personal-info-avatar-size + $row-margin, $avatar-rowspan);
+        }
+    }
+}

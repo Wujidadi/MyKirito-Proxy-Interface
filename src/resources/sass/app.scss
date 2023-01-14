@@ -1,69 +1,13 @@
-@use 'sass:math';
-
 @import 'env';
 @import 'bootstrap/scss/bootstrap';
 @import 'variables';
 @import 'dark';
 
 body {
-    nav.navbar {
-        position: fixed;
-        top: 0;
-        z-index: 999;
-        width: 100%;
-        padding: 0 5%;
-        margin: {
-            bottom: 18px;
-        }
-        background-color: $primary-bg-color;
-        -webkit-box-align: center;
-        align-items: center;
-        box: {
-            sizing: border-box;
-            shadow: rgb(0 0 0 / 30%) 0 2px 4px;
-        }
-
-        a.nav-link {
-            background-color: $primary-bg-color;
-            color: $primary-fg-color;
-            display: flex;
-            -webkit-box-align: center;
-            align-items: center;
-            height: $navbar-height;
-            padding: 0 8px;
-            transition: all 0.16s ease 0s;
-
-            &.final {
-                margin-left: auto;
-                cursor: pointer;
-            }
-
-            &:hover {
-                text-decoration: none;
-            }
-            &:not(.active) {
-                &:hover {
-                    background-color: transparentize($primary-fg-color, 0.8);
-                }
-            }
-
-            &.active {
-                background-color: $primary-fg-color;
-                color: $primary-bg-color;
-            }
-        }
-    }
+    @import 'components/navbar';
 
     div.main {
         margin-top: $navbar-height;
-
-        h3 {
-            font-size: 1.17em;
-
-            &.title {
-                font-weight: 600;
-            }
-        }
 
         table {
             caption {
@@ -76,21 +20,15 @@ body {
 
             th, td {
                 border: $table-cell-border;
-                padding: 4px 8px;
+                padding: $cell-padding;
                 text-align: left;
-            }
-
-            th {
-                &.head-1, &.head-2 {
-                    background-color: $th-bg-color;
-                }
             }
         }
 
         div.page {
             margin: $navbar-height + $main-page-top-gap auto 0;
-            max-width: 760px;
-            min-width: 400px;
+            min-width: $min-content-width;
+            max-width: $max-content-width;
 
             div.info {
                 div.field {
@@ -98,51 +36,13 @@ body {
                     margin-bottom: $field-gap;
                     padding: $field-padding;
 
-                    &#personalInfoField {
-                        h3.title {
-                            margin-bottom: 12px;
-                        }
+                    h3.title {
+                        font-size: $h3-title-size;
+                        font-weight: $h3-title-weight;
+                        margin-bottom: $h3-title-margin-bottom;
                     }
 
-                    #personalInfo {
-                        th {
-                            &.head-1, &.head-2 {
-                                width: 14.28%;
-                            }
-                            &.ability {
-                                background-color: $th-abil-bg-color;
-                            }
-                        }
-                        td {
-                            &.content-1, &.content-2 {
-                                width: 35.72%;
-                            }
-                            &.murder {
-                                color: lightblue;
-                            }
-                            &.bot-lv {
-                                color: aquamarine;
-                            }
-                            &.protection {
-                                color: lightsalmon;
-                            }
-                            &.to-next-level {
-                                color: yellow;
-                            }
-                            &.last-time {
-                                color: thistle;
-                            }
-                        }
-                        img.personal-info-avatar {
-                            height: $personal-info-avatar-size;
-                            width: $personal-info-avatar-size;
-                        }
-                        tr.beside-avatar {
-                            th, td {
-                                height: math.div($personal-info-avatar-size + 9.5, 3);
-                            }
-                        }
-                    }
+                    @import 'components/personal-info';
                 }
             }
         }

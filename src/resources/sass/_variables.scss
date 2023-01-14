@@ -1,14 +1,26 @@
+// 顏色
 $primary-fg-color: white;
 $primary-bg-color: #109090;
 $border-color: #444;
 $th-bg-color: #4e4e4e;
 $th-abil-bg-color: #536d94;
 
+// 字體
+$h3-title-size: 1.17em;
+$h3-title-weight: 600;
+
+// 距離
 $navbar-height: 48px;
 $main-page-top-gap: 60px;
 $field-gap: 18px;
 $field-padding: 12px;
+$cell-padding: 4px 8px;
+$h3-title-margin-bottom: 12px;
 
+// 尺寸
 $personal-info-avatar-size: 160px;
+$min-content-width: 400px;
+$max-content-width: 760px;
 
+// 線條
 $table-cell-border: 1px solid $border-color;
