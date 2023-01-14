@@ -3,11 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "AchievementRankingPage"
-    }
+export default {
+    name: 'AchievementRankingPage',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped lang="scss"></style>

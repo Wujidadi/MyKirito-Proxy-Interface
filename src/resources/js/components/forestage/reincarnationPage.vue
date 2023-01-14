@@ -3,11 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "ReincarnationPage"
-    }
+export default {
+    name: 'ReincarnationPage',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped lang="scss"></style>

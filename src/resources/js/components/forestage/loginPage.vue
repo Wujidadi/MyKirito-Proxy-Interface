@@ -3,11 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "LoginPage"
-    };
+export default {
+    name: 'LoginPage',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped lang="scss"></style>

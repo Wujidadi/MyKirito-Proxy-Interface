@@ -3,11 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "HallOfFamePage"
-    }
+export default {
+    name: 'HallOfFamePage',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped lang="scss"></style>

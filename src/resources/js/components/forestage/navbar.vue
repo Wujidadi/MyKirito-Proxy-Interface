@@ -9,7 +9,7 @@
         <router-link class="nav-link" to="/reincarnation">轉生</router-link>
         <router-link class="nav-link" to="/reports">戰報</router-link>
         <a class="nav-link final">
-            <theme-switcher style="width: 28px;"/>
+            <theme-switcher style="width: 28px" />
         </a>
     </nav>
 </template>
@@ -18,7 +18,7 @@
 import ThemeSwitcher from '@/assets/icons/theme-switcher.svg';
 
 export default {
-    name: "Navbar",
+    name: 'Navbar',
     components: {
         ThemeSwitcher,
     },

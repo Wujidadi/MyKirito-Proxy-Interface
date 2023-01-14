@@ -3,11 +3,9 @@
 </template>
 
 <script>
-    export default {
-        name: "Boss"
-    }
+export default {
+    name: 'Boss',
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped lang="scss"></style>
