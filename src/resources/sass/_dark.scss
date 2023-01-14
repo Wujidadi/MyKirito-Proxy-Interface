@@ -6,4 +6,8 @@ $_bg-color: #111;
 body.dark {
     background-color: $_bg-color;
     color: $_fg-color;
+
+    button, button:hover {
+        color: #eee;
+    }
 }

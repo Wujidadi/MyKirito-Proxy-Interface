@@ -1,6 +1,6 @@
+@import 'variables';
 @import 'env';
 @import 'bootstrap/scss/bootstrap';
-@import 'variables';
 @import 'dark';
 
 body {
@@ -36,6 +36,12 @@ body {
                         font-size: $h3-title-size;
                         font-weight: $h3-title-weight;
                         margin-bottom: $h3-title-margin-bottom;
+                    }
+
+                    div.row.form {
+                        div.col {
+                            flex: 0 0 auto;
+                        }
                     }
                 }
             }
