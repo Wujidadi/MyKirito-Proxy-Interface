@@ -114,7 +114,7 @@ router.beforeEach(async (to, from) => {
             name: 'Login'
         };
     }
-    document.title = to.name === 'PlayerInfo' ? myDefs.defaultPageTitle : `${to.meta.title || ''} - ${myDefs.defaultPageTitle}`;
+    MyFuncs.changeTitle(to);
 });
 
 export default router;
