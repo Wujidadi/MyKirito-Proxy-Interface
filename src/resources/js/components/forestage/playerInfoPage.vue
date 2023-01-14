@@ -135,6 +135,8 @@ export default {
 @use 'sass:math';
 
 @import '@/sass/_variables.scss';
+@import '@/sass/_dark.scss';
+@import '@/sass/_light.scss';
 
 $th-width: 14.28%;
 
@@ -146,7 +148,7 @@ th {
     }
 
     &.ability {
-        background-color: $th-abil-bg-color;
+        background-color: var(--th-abil-bg-color);
     }
 }
 
@@ -157,23 +159,23 @@ td {
     }
 
     &.murder {
-        color: lightblue;
+        color: var(--blue-info-color);
     }
 
     &.bot-lv {
-        color: aquamarine;
+        color: var(--green-info-color);
     }
 
     &.protection {
-        color: lightsalmon;
+        color: var(--orange-info-color);
     }
 
     &.to-next-level {
-        color: yellow;
+        color: var(--yellow-info-color);
     }
 
     &.last-time {
-        color: thistle;
+        color: var(--purple-info-color);
     }
 }
 

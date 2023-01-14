@@ -4,6 +4,8 @@ $_fg-color: #ddd;
 $_bg-color: #111;
 
 body.dark {
+    /* 以 dark 為預設主題，關聯的 CSS variables 均定義在 _variables.scss 的 :root 裡 */
+
     background-color: $_bg-color;
     color: $_fg-color;
 

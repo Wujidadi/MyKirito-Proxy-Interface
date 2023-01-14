@@ -1,15 +1,37 @@
-// 顏色
-$primary-fg-color: white;
-$primary-bg-color: #109090;
-$border-color: #444;
-$th-bg-color: #4e4e4e;
-$th-abil-bg-color: #536d94;
+:root {
+    --bahamut: #109090;
 
-// 字體
+    --primary-fg-color: white;
+    --primary-fg-color-r: 255;
+    --primary-fg-color-g: 255;
+    --primary-fg-color-b: 255;
+    --primary-bg-color: var(--bahamut);
+
+    --border-color: #444;
+    --th-bg-color: #4e4e4e;
+    --th-abil-bg-color: #536d94;
+
+    --btn-hover-bg-color: var(--border-color);
+    --btn-active-bg-color: #c3c3c3;
+    --btn-active-border-color: #666;
+    --btn-transition: all 0.16s ease-out 0s;
+    --btn-shadow: rgb(0 0 0 / 40%) 1px 1px 3px inset;
+    --btn-positive-bg-color: var(--bahamut);
+    --btn-positive-hover-bg-color: #039e9e;
+    --btn-positive-hover-border: #017171;
+    --btn-negative-bg-color: var(--th-bg-color);
+    --btn-negative-hover-border: #666;
+
+    --blue-info-color: lightblue;
+    --green-info-color: aquamarine;
+    --orange-info-color: lightsalmon;
+    --yellow-info-color: yellow;
+    --purple-info-color: thistle;
+}
+
 $h3-title-size: 1.17em;
 $h3-title-weight: 600;
 
-// 距離
 $navbar-height: 48px;
 $main-page-top-gap: 60px;
 $field-gap: 18px;
@@ -17,10 +39,8 @@ $field-padding: 12px;
 $cell-padding: 4px 8px;
 $h3-title-margin-bottom: 12px;
 
-// 尺寸
 $personal-info-avatar-size: 160px;
 $min-content-width: 400px;
 $max-content-width: 760px;
 
-// 線條
-$table-cell-border: 1px solid $border-color;
+$table-cell-border: 1px solid var(--border-color);

@@ -2,6 +2,7 @@
 @import 'env';
 @import 'bootstrap/scss/bootstrap';
 @import 'dark';
+@import 'light';
 
 body {
     div.main {
@@ -48,12 +49,41 @@ body {
                             flex: 0 0 auto;
                         }
                     }
+
+                    button {
+                        outline: 0;
+                        transition: var(--btn-transition);
+
+                        &:active {
+                            background-color: var(--btn-active-bg-color) !important;
+                            border-color: var(--btn-active-border-color);
+                            box-shadow: var(--btn-shadow);
+                        }
+
+                        &.btn-positive {
+                            background-color: var(--btn-positive-bg-color);
+
+                            &:hover {
+                                background: var(--btn-positive-hover-bg-color);
+                                border-color: var(--btn-positive-hover-border);
+                            }
+                        }
+
+                        &.btn-negative {
+                            background-color: var(--btn-negative-bg-color);
+
+                            &:hover {
+                                background: var(--btn-hover-bg-color);
+                                border-color: var(--btn-negative-hover-border);
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
     span.rattr {
-        color: $primary-bg-color;
+        color: var(--primary-bg-color);
     }
 }

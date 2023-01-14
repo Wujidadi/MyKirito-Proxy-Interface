@@ -1,0 +1,32 @@
+@import 'variables';
+
+$_fg-color: #111;
+$_bg-color: white;
+
+body.light {
+    --bahamut: #00b5b5;
+
+    --primary-bg-color: var(--bahamut);
+
+    --border-color: #ddd;
+    --th-bg-color: #f0f0f0;
+    --th-abil-bg-color: #cadfff;
+
+    --btn-hover-bg-color: #d4d4d4;
+    --btn-positive-bg-color: var(--bahamut);
+    --btn-negative-bg-color: #e0e0e0;
+    --btn-negative-hover-border: #999;
+
+    --blue-info-color: cornflowerblue;
+    --green-info-color: darkseagreen;
+    --orange-info-color: salmon;
+    --yellow-info-color: #e8c407;
+    --purple-info-color: mediumpurple;
+
+    background-color: $_bg-color;
+    color: $_fg-color;
+
+    button, button:hover {
+        color: #eee;
+    }
+}
