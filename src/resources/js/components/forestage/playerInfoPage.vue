@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <div class="info" id="playerInfoAndActions">
+        <div class="content" id="playerInfoAndActions">
             <div class="field" id="personalInfoField">
                 <h3 class="title">我的桐人</h3>
                 <table class="info-table" id="personalInfo">
