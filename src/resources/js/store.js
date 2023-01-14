@@ -1,10 +1,16 @@
 import './bootstrap';
 
 const store = Vuex.createStore({
+    state() {
+        return {
+            //
+        };
+    },
+    getters: {
+        //
+    },
     modules: {
-        // businessReport: require('@/js/new/modules/backend/businessReport/businessReport').default,
-        // businessReportRule: require('@/js/new/modules/backend/businessReport/businessReportRule').default,
-        // statisticalReport: require('@/js/new/modules/backend/ginbao/statisticalReport.js').default,
+        //
     },
 });
 
