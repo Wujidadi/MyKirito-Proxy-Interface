@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @import 'env';
 @import 'bootstrap/scss/bootstrap';
 @import 'variables';
@@ -137,7 +139,7 @@ body {
                         }
                         tr.beside-avatar {
                             th, td {
-                                height: ($personal-info-avatar-size + 9.5) / 3;
+                                height: math.div($personal-info-avatar-size + 9.5, 3);
                             }
                         }
                     }
