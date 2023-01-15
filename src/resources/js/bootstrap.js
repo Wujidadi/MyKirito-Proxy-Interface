@@ -1,7 +1,8 @@
 import _ from 'lodash';
 window._ = _;
 
-import 'bootstrap';
+import * as Bootstrap from 'bootstrap';
+window.Bootstrap = Bootstrap;
 
 import * as Vue from 'vue';
 window.Vue = Vue;
@@ -21,3 +22,6 @@ window.MyDefs = myDefs;
 
 import myFuncs from './mylib/functions';
 window.MyFuncs = myFuncs;
+
+import myExcps from './mylib/exceptions';
+window.MyExcps = myExcps;
