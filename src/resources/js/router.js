@@ -101,7 +101,7 @@ const router = VueRouter.createRouter({
             component: RegisterPage,
             meta: {
                 requiresAuth: false,
-                title: '註冊',
+                title: '使用者註冊',
             },
         },
     ],
