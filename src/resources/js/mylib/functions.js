@@ -10,10 +10,10 @@ const changeTitle = (vueTo) => {
  *
  * @param {object} vueComponent
  * @param {string} title
- * @param {string} message
+ * @param {string[]} message
  * @returns {void}
  */
-const alert = (vueComponent, title = '預設標題', message = '預設訊息內容') => {
+const alert = (vueComponent, title = '預設標題', message = ['預設訊息內容']) => {
     vueComponent.alert = {
         title: title,
         content: message,

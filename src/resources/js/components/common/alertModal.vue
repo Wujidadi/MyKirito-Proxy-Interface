@@ -5,9 +5,7 @@
                 <div class="modal-header justify-content-center border-0">
                     <h1 class="modal-title" id="exampleModalLabel">{{ title }}</h1>
                 </div>
-                <div class="modal-body text-center border-0 mb-3">
-                    {{ content }}
-                </div>
+                <div class="modal-body text-center border-0 p-0 mb-1" v-html="contentHtml"></div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-positive w-100" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -19,14 +17,33 @@
 <script>
 export default {
     name: 'AlertModal',
+    data() {
+        return {
+            contentHtml: '',
+        };
+    },
     props: {
         title: {
             type: String,
             default: '出事了',
         },
         content: {
-            type: String,
-            default: '出事了阿伯',
+            type: Array,
+            default: ['出事了阿伯'],
+        },
+    },
+    watch: {
+        content(n, o) {
+            this.buildContentHtml();
+        },
+    },
+    methods: {
+        buildContentHtml() {
+            let html = '';
+            for (let i = 0; i < this.content.length; i++) {
+                html += `<div class="my-3">${this.content[i]}</div>`;
+            }
+            this.contentHtml = html;
         },
     },
 };

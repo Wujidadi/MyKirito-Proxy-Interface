@@ -8,3 +8,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('get-tokens', [\App\Http\Controllers\Api\TokenController::class, 'getTokens']);
+
+Route::group(['prefix' => 'user'], function () {
+    Route::post('add', [\App\Http\Controllers\Api\UserController::class, 'add']);
+});

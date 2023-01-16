@@ -47,12 +47,13 @@ export default {
     },
     data() {
         return {
+            api: '/api/user/add',
             username: '',
             password: '',
             password2: '',
             alert: {
                 title: '警告',
-                content: '帳號或密碼錯誤',
+                content: ['帳號或密碼錯誤'],
             },
         };
     },
@@ -91,7 +92,37 @@ export default {
             }
         },
         sendRequest() {
-            console.log('Send request');
+            axios({
+                method: 'post',
+                url: this.api,
+                data: {
+                    username: this.username,
+                    password: this.password,
+                },
+            })
+                .then(response => {
+                    console.log(response);
+                    // if (response.data.status === 'success') {
+                    //     MyFuncs.alert(this, '註冊成功', '請重新登入');
+                    //     this.$router.push('/login');
+                    // } else {
+                    //     MyFuncs.alert(this, '註冊失敗', response.data.message);
+                    // }
+                })
+                .catch(error => {
+                    if (error.response && error.response.data && error.response.data.data) {
+                        const errorData = error.response.data.data;
+                        let errorMessage = [];
+                        Object.keys(errorData).forEach(key => {
+                            errorData[key].forEach(value => {
+                                errorMessage.push(value);
+                            });
+                        });
+                        MyFuncs.alert(this, '使用者註冊失敗', errorMessage);
+                    } else {
+                        MyFuncs.alert(this, '使用者註冊失敗', '意料外的錯誤');
+                    }
+                });
         },
     },
 };
