@@ -78,6 +78,9 @@ yarn-error.log
 # Sublime Text
 *.sublime-*
 
+# Thunder Client
+thunder-tests/
+
 #================================================#
 
 ## macOS
