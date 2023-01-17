@@ -8,7 +8,9 @@ use App\Constants\ErrDef;
  * 自訂標準回應類別
  *
  * @property ErrorInfoBag $error
- * @property array $data
+ * @property array $data 鍵值對，key 為錯誤類型，value 為該類型所屬錯誤訊息（字串陣列）  
+ *                       例如：`['error' => ['帳號錯誤', '密碼未填']]`  
+ *                       此資料型態是為了和 FormRequest 的錯誤格式（`Illuminate\Support\MessageBag`）相容
  */
 class StandardResponse
 {
