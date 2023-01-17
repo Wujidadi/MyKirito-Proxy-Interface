@@ -23,7 +23,7 @@ class UserController extends Controller
         $user->name = $validated['username'];
         $user->password = Hash::make($validated['password']);
 
-        if (! $user->save()) {
+        if (!$user->save()) {
             $response->error->code = ErrDef::DB_INSERT_ERROR;
             $response->error->message = ErrDef::MESSAGE[ErrDef::DB_INSERT_ERROR];
             $response->data = ['使用者註冊失敗'];
