@@ -14,7 +14,7 @@ class AddRequest extends FormRequestWithThrowingFailedResponse
     public function rules(): array
     {
         return [
-            'username' => 'required|string|min:10',
+            'username' => 'required|string|min:3|unique:users,name',
             'password' => 'required|string|min:6',
         ];
     }
@@ -23,7 +23,8 @@ class AddRequest extends FormRequestWithThrowingFailedResponse
     {
         return [
             'username.required' => '必須指定使用者帳號',
-            'username.min' => '使用者帳號不可少於 10 位',
+            'username.unique' => '使用者帳號已存在',
+            'username.min' => '使用者帳號不可少於 3 位',
             'password.required' => '必須指定密碼',
             'password.min' => '密碼不可少於 6 位',
         ];
