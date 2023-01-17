@@ -128,14 +128,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.col {
-    &.form-title {
-        width: 12%;
-    }
-
-    &.form-content {
-        width: 88%;
-    }
-}
-</style>
+<style scoped lang="scss"></style>

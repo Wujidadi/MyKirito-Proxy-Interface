@@ -20,7 +20,8 @@ body {
                 width: 100%;
             }
 
-            th, td {
+            th,
+            td {
                 border: $table-cell-border;
                 padding: $cell-padding;
                 text-align: left;
@@ -49,6 +50,16 @@ body {
                             flex: 0 0 auto;
                         }
                     }
+                }
+            }
+
+            div.col {
+                &.form-title {
+                    width: 12%;
+                }
+
+                &.form-content {
+                    width: 88%;
                 }
             }
 
