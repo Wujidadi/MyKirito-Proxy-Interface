@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\PlayerTokenRepository;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
 
 class PlayerTokenService
@@ -72,6 +73,6 @@ class PlayerTokenService
                 'token' => $datum->token,
             ];
         }
-        return response()->json($array, 200);
+        return response()->json($array, Response::HTTP_OK);
     }
 }

@@ -9,6 +9,7 @@ use App\Utilities\Log\Facade as LogFacade;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response;
 
 /**
  * 表單請求驗證器，遇錯誤時直接返回 JSON response
@@ -26,6 +27,11 @@ class FormRequestWithThrowingFailedResponse extends FormRequest
             $validator->errors()->toArray()
         );
         LogFacade::mykirito()->error('%s', $response);
-        throw new HttpResponseException(response()->json($response, 422, [], JsonFlag::UNESCAPED));
+        throw new HttpResponseException(response()->json(
+            $response,
+            Response::HTTP_UNPROCESSABLE_ENTITY,
+            [],
+            JsonFlag::UNESCAPED
+        ));
     }
 }
