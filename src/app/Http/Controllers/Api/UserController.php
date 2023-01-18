@@ -3,33 +3,37 @@
 namespace App\Http\Controllers\Api;
 
 use App\Constants\ErrDef;
-use App\Constants\JsonFlag;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\AddRequest as AddUserRequest;
-use App\Http\Responses\StandardResponse;
 use App\Models\Users;
+use App\Traits\JsonResponseBuilder;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function add(AddUserRequest $request)
+    use JsonResponseBuilder;
+
+    public function add(AddUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
-        $response = new StandardResponse();
-        $httpCode = 200;
+        $code = ErrDef::OK;
+        $data = '';
+        $httpStatusCode = Response::HTTP_OK;
 
+        // ToDo: 不要直接呼叫 Model，要透過 Repository -> Service
         $user = new Users();
         $user->name = $validated['username'];
         $user->password = Hash::make($validated['password']);
 
         if (!$user->save()) {
-            $response->error->code = ErrDef::DB_INSERT_ERROR;
-            $response->error->message = ErrDef::MESSAGE[ErrDef::DB_INSERT_ERROR];
-            $response->data = ['使用者註冊失敗'];
-            $httpCode = 500;
+            $code = ErrDef::DB_INSERT_ERROR;
+            $data = '使用者註冊失敗';
+            $httpStatusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
-        return response()->json($response, $httpCode, [], JsonFlag::UNESCAPED);
+        return $this->singleJsonResponse($code, $data, $httpStatusCode);
     }
 }
