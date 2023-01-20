@@ -16,6 +16,9 @@ php artisan key:generate
 cd ..
 docker/build/up
 
+# Generate ES256 certificates for JWT
+php artisan jwt:generate-certs --force --algo=ec --curve=prime256v1 --sha=256
+
 # Optional but recommended
 cd src
 php artisan ide-helper:generate
