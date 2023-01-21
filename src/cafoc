@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+/*
+ * [C]all [A]rtisan [f]rom [o]utside the [c]ontainer
+ */
+
+chdir(__DIR__);
+
+require './vendor/autoload.php';
+
+use Dotenv\Dotenv;
+use Widget\CliHelper;
+use Widget\Color;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+$containerName = $_ENV['APP_CONTAINER_NAME'];
+
+$command = trim(implode(' ', array_slice($argv, 1)));
+if (!empty($command)) {
+    try {
+        system("docker exec -it {$containerName} bash -c '{$command}'");
+    } catch (Throwable $e) {
+        echo CliHelper::colorText(
+            json_encode([
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            Color::Salmon,
+            true,
+            false
+        );
+    }
+}
+
+exit(0);
