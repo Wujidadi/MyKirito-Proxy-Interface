@@ -4,13 +4,14 @@ namespace App\Http\Middleware;
 
 use App\Constants\ErrDef;
 use App\Traits\JsonResponseBuilder;
+use App\Utilities\Log\Facade as LogFacade;
 use Closure;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class JwtMiddleware
 {

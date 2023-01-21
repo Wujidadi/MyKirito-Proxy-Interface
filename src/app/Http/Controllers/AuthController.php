@@ -6,7 +6,6 @@ use App\Constants\ErrDef;
 use App\Traits\JsonResponseBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use App\Utilities\Log\Facade as LogFacade;
 
 class AuthController extends Controller
 {
@@ -22,7 +21,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('jwt', ['except' => ['login']]);
     }
 
     /**
@@ -36,7 +35,12 @@ class AuthController extends Controller
         $rememberMe = request('rememberMe', true);
         $ttl = $rememberMe ? self::LONG_TTL_IN_MINUTES : self::TTL_IN_MINUTES;
 
-        if (!$token = Auth::setTTL($ttl)->attempt($credentials, $rememberMe)) {
+        $token = Auth::setTTL($ttl)
+            ->claims([
+                'usr' => request('name'),
+            ])
+            ->attempt($credentials, $rememberMe);
+        if (!$token) {
             return $this->singleJsonResponse(ErrDef::LOGIN_NOT_MATCH, '帳號或密碼錯誤', 401);
         }
 
