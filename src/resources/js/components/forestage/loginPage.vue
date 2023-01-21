@@ -48,6 +48,7 @@ export default {
     data() {
         return {
             api: '/api/login',
+            homePage: '/',
             username: '',
             password: '',
             rememberMe: false,
@@ -99,13 +100,11 @@ export default {
                 },
             })
                 .then(response => {
-                    console.log(response);
-                    // if (response.data.status === 'success') {
-                    //     MyFuncs.alert(this, '註冊成功', '請重新登入');
-                    //     this.$router.push('/login');
-                    // } else {
-                    //     MyFuncs.alert(this, '註冊失敗', response.data.message);
-                    // }
+                    if (response.data && response.data.data && response.data.data.jwt) {
+                        localStorage.setItem('Token', response.data.data.jwt.access_token);
+                        let nextPage = localStorage.getItem('From') || this.homePage;
+                        this.$router.push(nextPage);
+                    }
                 })
                 .catch(error => {
                     if (error.response && error.response.data && error.response.data.data) {

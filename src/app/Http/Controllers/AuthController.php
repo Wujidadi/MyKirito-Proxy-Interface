@@ -35,12 +35,7 @@ class AuthController extends Controller
         $rememberMe = request('rememberMe', true);
         $ttl = $rememberMe ? self::LONG_TTL_IN_MINUTES : self::TTL_IN_MINUTES;
 
-        $token = Auth::setTTL($ttl)
-            ->claims([
-                'usr' => request('name'),
-            ])
-            ->attempt($credentials, $rememberMe);
-        if (!$token) {
+        if (!$token = Auth::setTTL($ttl)->attempt($credentials)) {
             return $this->singleJsonResponse(ErrDef::LOGIN_NOT_MATCH, '帳號或密碼錯誤', 401);
         }
 

@@ -1,7 +1,7 @@
 import './bootstrap';
 
 import PlayerInfoPage from '@/js/components/forestage/playerInfoPage.vue';
-import UserListPage from "./components/forestage/userListPage.vue";
+import UserListPage from '@/js/components/forestage/userListPage.vue';
 import BossPage from '@/js/components/forestage/bossPage.vue';
 import AchievementsPage from '@/js/components/forestage/achievementsPage.vue';
 import AchievementRankingPage from '@/js/components/forestage/achievementRankingPage.vue';
@@ -46,7 +46,7 @@ const router = VueRouter.createRouter({
             name: 'Achievements',
             component: AchievementsPage,
             meta: {
-                requiresAuth: false,
+                requiresAuth: true,
                 title: '成就',
             },
         },
@@ -108,13 +108,48 @@ const router = VueRouter.createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-    let isAuthenticated = true;
+    rememberFrom(from, to);
+    let isAuthenticated = await auth();
     if (to.meta.requiresAuth && !isAuthenticated && to.name !== 'Login') {
         return {
-            name: 'Login'
+            name: 'Login',
         };
     }
     MyFuncs.changeTitle(to);
 });
+
+const rememberFrom = function (from, to) {
+    if (typeof from.name !== 'undefined' && from.name !== 'Login' && from.name !== to.name) {
+        localStorage.setItem('From', from.path);
+    }
+};
+
+const auth = async function () {
+    let isPass = false;
+    if (localStorage.getItem('Token')) {
+        const jwt = localStorage.getItem('Token');
+        await axios({
+            method: 'post',
+            url: '/api/token/verify',
+            headers: {
+                authorization: `Bearer ${jwt}`,
+            },
+        })
+            .then(response => {
+                if (response.data && response.data.id && response.data.name) {
+                    isPass = true;
+                } else {
+                    isPass = false;
+                }
+            })
+            .catch(error => {
+                isPass = false;
+            });
+    }
+    if (!isPass) {
+        localStorage.removeItem('Token');
+    }
+    return isPass;
+};
 
 export default router;
