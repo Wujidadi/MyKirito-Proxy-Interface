@@ -143,7 +143,7 @@ $th-width: 14.28%;
 th {
     &.head-1,
     &.head-2 {
-        background-color: $th-bg-color;
+        background-color: var(--th-bg-color);
         width: $th-width;
     }
 
