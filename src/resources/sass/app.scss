@@ -74,6 +74,10 @@ body {
         }
     }
 
+    a:not(:hover) {
+        text-decoration: none;
+    }
+
     button {
         outline: 0;
         transition: var(--btn-transition);

@@ -11,6 +11,7 @@ import vueComponents from './components';
 import defaultPlayerInfo from './data/defaultPlayerInfo';
 import levelThresholds from './data/levelThresholds';
 import fragments from './data/fragments';
+import apiList from './data/apiList';
 
 if (document.querySelector('#app')) {
     Vue.createApp({
@@ -20,6 +21,9 @@ if (document.querySelector('#app')) {
                 players: {},
                 currentPlayer: '',
                 currentPlayerInfo: {},
+                appendCurrentPlayerInfo: {
+                    teammateNickname: '',
+                },
                 alertModal: null,
                 alertMessage: {
                     title: '警告',
@@ -27,6 +31,7 @@ if (document.querySelector('#app')) {
                 },
                 threshold: levelThresholds,
                 fragment: fragments,
+                api: apiList,
             };
         },
         methods: {
@@ -41,8 +46,8 @@ if (document.querySelector('#app')) {
             },
             getPlayerInfo() {
                 axios({
-                    method: 'get',
-                    url: 'https://mykirito.com/api/my-kirito',
+                    method: this.api.myKiritoApi.personalInfo.method,
+                    url: this.api.myKiritoApi.personalInfo.url,
                     headers: {
                         token: this.players[this.currentPlayer].token,
                     },
@@ -58,6 +63,9 @@ if (document.querySelector('#app')) {
             },
             initCurrentPlayer() {
                 this.currentPlayerInfo = JSON.parse(JSON.stringify(defaultPlayerInfo));
+                this.appendPlayerInfo({
+                    teammateNickname: this.currentPlayerInfo.teammate,
+                });
             },
             setPlayerInfo(data) {
                 for (let p in defaultPlayerInfo) {
@@ -65,6 +73,18 @@ if (document.querySelector('#app')) {
                         this.currentPlayerInfo[p] = data[p];
                     } else {
                         this.currentPlayerInfo[p] = defaultPlayerInfo[p];
+                    }
+                }
+                this.appendPlayerInfo({
+                    teammateNickname: data.teammate,
+                });
+            },
+            appendPlayerInfo(data) {
+                for (let p in this.appendCurrentPlayerInfo) {
+                    if (data[p] !== undefined && data[p] !== null) {
+                        this.currentPlayerInfo[p] = data[p];
+                    } else {
+                        this.currentPlayerInfo[p] = this.appendCurrentPlayerInfo[p];
                     }
                 }
             },

@@ -155,14 +155,14 @@
                         <tr>
                             <td class="form-label align-middle">隊友暱稱</td>
                             <td class="form-body align-middle">
-                                <input class="form-control" type="text" v-model="$root.currentPlayerInfo.teammate" />
+                                <input class="form-control" type="text" v-model="$root.currentPlayerInfo.teammateNickname" />
                             </td>
                             <td class="form-button align-middle text-end">
-                                <button type="button" class="btn btn-negative w-100">設定</button>
+                                <button type="button" class="btn btn-negative w-100" @click="setTeammate">設定</button>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">隊伍狀態：</td>
+                            <td colspan="3" v-html="teammateHtml"></td>
                         </tr>
                         <tr>
                             <td colspan="3">
@@ -177,6 +177,8 @@
 </template>
 
 <script>
+import myDefs from '@/js/mylib/definitions';
+
 export default {
     name: 'PlayerInfoPage',
     methods: {
@@ -198,8 +200,8 @@ export default {
         },
         updateStatus() {
             axios({
-                method: 'post',
-                url: 'https://mykirito.com/api/my-kirito/status',
+                method: this.$root.api.myKiritoApi.updateStatus.method,
+                url: this.$root.api.myKiritoApi.updateStatus.url,
                 headers: {
                     'content-type': 'application/json; charset=UTF-8',
                     token: this.$root.players[this.$root.currentPlayer].token,
@@ -208,11 +210,40 @@ export default {
                     status: this.$root.currentPlayerInfo.status,
                 },
             })
-                .then((response) => {
+                .then(response => {
                     this.$root.alert('更新玩家狀態', '更新成功');
                 })
-                .catch((error) => {
+                .catch(error => {
                     this.$root.alert('更新玩家狀態', error.response.data.error);
+                });
+        },
+        setTeammate() {
+            axios({
+                method: this.$root.api.myKiritoApi.setTeammate.method,
+                url: this.$root.api.myKiritoApi.setTeammate.url,
+                headers: {
+                    'content-type': 'application/json; charset=UTF-8',
+                    token: this.$root.players[this.$root.currentPlayer].token,
+                },
+                data: {
+                    teammate: this.$root.currentPlayerInfo.teammateNickname,
+                },
+            })
+                .then(response => {
+                    if (response.data.teammateUID) {
+                        this.$root.alert('設定隊友', '設定成功');
+                        this.$root.currentPlayerInfo.teammate = this.$root.currentPlayerInfo.teammateNickname;
+                        this.$root.currentPlayerInfo.teammateUID = response.data.teammateUID;
+                    } else {
+                        if (this.$root.currentPlayerInfo.teammateUID) {
+                            this.$root.alert('設定隊友', '隊伍已解除');
+                            this.$root.currentPlayerInfo.teammate = '';
+                            this.$root.currentPlayerInfo.teammateUID = false;
+                        }
+                    }
+                })
+                .catch(error => {
+                    this.$root.alert('設定隊友', error.response.data.error);
                 });
         },
     },
@@ -230,7 +261,7 @@ export default {
         },
         toNextLevel() {
             const level = this.$root.currentPlayerInfo.lv;
-            if (level !== null) {
+            if (level !== null && level !== '') {
                 if (level < 70) {
                     const exp = this.$root.currentPlayerInfo.exp;
                     const nextLevelExp = this.$root.threshold[level + 1];
@@ -243,11 +274,23 @@ export default {
         protection() {
             const murder = this.$root.currentPlayerInfo.murder;
             const defDeath = this.$root.currentPlayerInfo.defDeath;
-            if (murder !== null && defDeath !== null) {
+            if (murder !== null && murder !== '' && defDeath !== null && defDeath !== '') {
                 return murder * 5 + 1 - defDeath;
             }
             return null;
         },
+        teammateHtml() {
+            const baseUrl = myDefs.myKiritoUrl.base;
+            const uid = this.$root.currentPlayerInfo.teammateUID;
+            const teammate = this.$root.currentPlayerInfo.teammate;
+            if (uid) {
+                return `隊伍狀態：<a class="teammate" target="_blank" href="${baseUrl}/profile/${uid}">${teammate}</a>`;
+            }
+            return '隊伍狀態：無';
+        },
+    },
+    mounted() {
+        // this.teammateNickname = this.$root.currentPlayerInfo.teammate;
     },
 };
 </script>
