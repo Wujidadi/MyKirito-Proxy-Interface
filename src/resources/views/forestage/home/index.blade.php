@@ -12,6 +12,7 @@
         <div class="main">
             <dead-band></dead-band>
             <router-view></router-view>
+            <alert-modal></alert-modal>
         </div>
     </div>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])

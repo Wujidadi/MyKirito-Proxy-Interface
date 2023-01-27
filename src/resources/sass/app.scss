@@ -15,6 +15,12 @@ body {
             bottom: 0;
         }
 
+        table:not(.table-borderless) {
+            th,
+            td {
+                border: $table-cell-border;
+            }
+        }
         table {
             caption {
                 display: none;
@@ -26,7 +32,6 @@ body {
 
             th,
             td {
-                border: $table-cell-border;
                 padding: $cell-padding;
                 text-align: left;
             }
@@ -66,34 +71,34 @@ body {
                     width: 88%;
                 }
             }
+        }
+    }
 
-            button {
-                outline: 0;
-                transition: var(--btn-transition);
+    button {
+        outline: 0;
+        transition: var(--btn-transition);
 
-                &:active {
-                    background-color: var(--btn-active-bg-color) !important;
-                    border-color: var(--btn-active-border-color);
-                    box-shadow: var(--btn-shadow);
-                }
+        &:active {
+            background-color: var(--btn-active-bg-color) !important;
+            border-color: var(--btn-active-border-color);
+            box-shadow: var(--btn-shadow);
+        }
 
-                &.btn-positive {
-                    background-color: var(--btn-positive-bg-color);
+        &.btn-positive {
+            background-color: var(--btn-positive-bg-color);
 
-                    &:hover {
-                        background: var(--btn-positive-hover-bg-color);
-                        border-color: var(--btn-positive-hover-border);
-                    }
-                }
+            &:hover {
+                background: var(--btn-positive-hover-bg-color);
+                border-color: var(--btn-positive-hover-border);
+            }
+        }
 
-                &.btn-negative {
-                    background-color: var(--btn-negative-bg-color);
+        &.btn-negative {
+            background-color: var(--btn-negative-bg-color);
 
-                    &:hover {
-                        background: var(--btn-hover-bg-color);
-                        border-color: var(--btn-negative-hover-border);
-                    }
-                }
+            &:hover {
+                background: var(--btn-hover-bg-color);
+                border-color: var(--btn-negative-hover-border);
             }
         }
     }

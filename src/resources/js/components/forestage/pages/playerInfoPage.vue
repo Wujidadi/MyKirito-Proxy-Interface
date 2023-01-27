@@ -138,6 +138,40 @@
                     </tbody>
                 </table>
             </div>
+            <div class="field" id="settings">
+                <h3 class="title">設定</h3>
+                <table class="table table-borderless">
+                    <caption>玩家狀態及隊友設定</caption>
+                    <tbody>
+                        <tr>
+                            <td class="form-label align-middle">個人狀態</td>
+                            <td class="form-body align-middle">
+                                <input class="form-control" type="text" v-model="$root.currentPlayerInfo.status" />
+                            </td>
+                            <td class="form-button align-middle text-end">
+                                <button type="button" class="btn btn-negative w-100" @click="updateStatus">更新</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="form-label align-middle">隊友暱稱</td>
+                            <td class="form-body align-middle">
+                                <input class="form-control" type="text" v-model="$root.currentPlayerInfo.teammate" />
+                            </td>
+                            <td class="form-button align-middle text-end">
+                                <button type="button" class="btn btn-negative w-100">設定</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">隊伍狀態：</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                對方也必須輸入你的暱稱，並且與你在相同的樓層。當雙方互相設定且同層數時隊伍將自動成立。隊伍僅於挑戰Boss時作用，只要有任一人挑戰Boss就會自動一起上陣
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
@@ -161,6 +195,25 @@ export default {
                 return moment(timestamp).format('YYYY-MM-DD HH:mm:ss.SSS');
             }
             return null;
+        },
+        updateStatus() {
+            axios({
+                method: 'post',
+                url: 'https://mykirito.com/api/my-kirito/status',
+                headers: {
+                    'content-type': 'application/json; charset=UTF-8',
+                    token: this.$root.players[this.$root.currentPlayer].token,
+                },
+                data: {
+                    status: this.$root.currentPlayerInfo.status,
+                },
+            })
+                .then((response) => {
+                    this.$root.alert('更新玩家狀態', '更新成功');
+                })
+                .catch((error) => {
+                    this.$root.alert('更新玩家狀態', error.response.data.error);
+                });
         },
     },
     computed: {
@@ -280,6 +333,20 @@ tr.beside-avatar {
     th,
     td {
         height: math.div($personal-info-avatar-size + $row-margin, $avatar-rowspan);
+    }
+}
+
+#settings {
+    .form-label {
+        width: 5em;
+    }
+    .form-body {
+        .form-control {
+            border-radius: 4px;
+        }
+    }
+    .form-button {
+        width: 4.8em;
     }
 }
 </style>

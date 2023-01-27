@@ -33,18 +33,13 @@
                 </div>
             </div>
         </div>
-        <alert-modal :title="alert.title" :content="alert.content"></alert-modal>
     </div>
 </template>
 
 <script>
-import alertModal from '@/js/components/common/alertModal.vue';
 
 export default {
     name: 'LoginPage',
-    components: {
-        AlertModal: alertModal,
-    },
     data() {
         return {
             api: '/api/login',
@@ -52,10 +47,6 @@ export default {
             username: '',
             password: '',
             rememberMe: false,
-            alert: {
-                title: '警告',
-                content: ['帳號或密碼錯誤'],
-            },
         };
     },
     methods: {
@@ -79,13 +70,13 @@ export default {
         },
         checkUsername() {
             if (this.username.length < 1) {
-                MyFuncs.alert(this, '警告', '未輸入帳號');
+                this.$root.alert('警告', '未輸入帳號');
                 throw new MyExcps.FormException(1, 'No username');
             }
         },
         checkPassword() {
             if (this.password.length < 1) {
-                MyFuncs.alert(this, '警告', '未輸入密碼');
+                this.$root.alert('警告', '未輸入密碼');
                 throw new MyExcps.FormException(2, 'No password');
             }
         },
@@ -116,9 +107,9 @@ export default {
                                 errorMessage.push(value);
                             });
                         });
-                        MyFuncs.alert(this, '登入失敗', errorMessage);
+                        this.$root.alert('登入失敗', errorMessage);
                     } else {
-                        MyFuncs.alert(this, '登入失敗', '意料外的錯誤');
+                        this.$root.alert('登入失敗', '意料外的錯誤');
                     }
                 });
         },

@@ -16,6 +16,11 @@ if (document.querySelector('#app')) {
                 players: {},
                 currentPlayer: '',
                 currentPlayerInfo: {},
+                alertModal: null,
+                alertMessage: {
+                    title: '警告',
+                    content: ['錯誤'],
+                },
                 playerInfoDefaultValue: {
                     _id: '',
                     empty: false,
@@ -95,7 +100,7 @@ if (document.querySelector('#app')) {
                     animals: '雞啼',
                     terroristBob: '鮑勃地雷',
                     austonAndAlice: '以愛麗絲為盾',
-                    frenzyBoar: '	豬叫',
+                    frenzyBoar: '豬叫',
                 },
             };
         },
@@ -138,6 +143,20 @@ if (document.querySelector('#app')) {
                     }
                 }
             },
+            initAlertModal() {
+                this.alertModal = new Bootstrap.Modal(document.querySelector('#alertModal'), {
+                    backdrop: 'static',
+                    keyboard: false,
+                });
+            },
+            alert(title = '警告', content = ['錯誤']) {
+                if (typeof content === 'string') {
+                    content = [content];
+                }
+                this.alertMessage.title = title;
+                this.alertMessage.content = content;
+                this.alertModal.show();
+            },
         },
         watch: {
             async currentPlayer(n, o) {
@@ -154,6 +173,7 @@ if (document.querySelector('#app')) {
             this.initCurrentPlayer();
         },
         mounted() {
+            this.initAlertModal();
             this.parsePlayers();
             this.setCurrentPlayer();
         },

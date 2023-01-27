@@ -78,16 +78,16 @@ export default {
         },
         checkUsername() {
             if (this.username.length < 1) {
-                MyFuncs.alert(this, '警告', '未輸入帳號');
+                this.$root.alert('警告', '未輸入帳號');
                 throw new MyExcps.FormException(1, 'No username');
             }
         },
         checkPassword() {
             if (this.password.length < 1 && this.password2.length < 1) {
-                MyFuncs.alert(this, '警告', '未輸入密碼');
+                this.$root.alert('警告', '未輸入密碼');
                 throw new MyExcps.FormException(2, 'No password');
             } else if (this.password !== this.password2) {
-                MyFuncs.alert(this, '警告', '密碼不一致');
+                this.$root.alert('警告', '密碼不一致');
                 throw new MyExcps.FormException(3, 'Password not match');
             }
         },
@@ -103,10 +103,10 @@ export default {
                 .then(response => {
                     console.log(response);
                     // if (response.data.status === 'success') {
-                    //     MyFuncs.alert(this, '註冊成功', '請重新登入');
+                    //     this.$root.alert('註冊成功', '請重新登入');
                     //     this.$router.push('/login');
                     // } else {
-                    //     MyFuncs.alert(this, '註冊失敗', response.data.message);
+                    //     this.$root.alert('註冊失敗', response.data.message);
                     // }
                 })
                 .catch(error => {
@@ -118,9 +118,9 @@ export default {
                                 errorMessage.push(value);
                             });
                         });
-                        MyFuncs.alert(this, '使用者註冊失敗', errorMessage);
+                        this.$root.alert('使用者註冊失敗', errorMessage);
                     } else {
-                        MyFuncs.alert(this, '使用者註冊失敗', '意料外的錯誤');
+                        this.$root.alert('使用者註冊失敗', '意料外的錯誤');
                     }
                 });
         },

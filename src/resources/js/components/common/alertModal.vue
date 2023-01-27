@@ -1,9 +1,9 @@
 <template>
-    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header justify-content-center border-0">
-                    <h1 class="modal-title" id="exampleModalLabel">{{ title }}</h1>
+                    <h1 class="modal-title" id="modalTitle">{{ $parent.alertMessage.title }}</h1>
                 </div>
                 <div class="modal-body text-center border-0 p-0 mb-1" v-html="contentHtml"></div>
                 <div class="modal-footer border-0">
@@ -17,33 +17,13 @@
 <script>
 export default {
     name: 'AlertModal',
-    data() {
-        return {
-            contentHtml: '',
-        };
-    },
-    props: {
-        title: {
-            type: String,
-            default: '出事了',
-        },
-        content: {
-            type: Array,
-            default: ['出事了阿伯'],
-        },
-    },
-    watch: {
-        content(n, o) {
-            this.buildContentHtml();
-        },
-    },
-    methods: {
-        buildContentHtml() {
+    computed: {
+        contentHtml() {
             let html = '';
-            for (let i = 0; i < this.content.length; i++) {
-                html += `<div class="my-3">${this.content[i]}</div>`;
+            for (let i = 0; i < this.$parent.alertMessage.content.length; i++) {
+                html += `<div class="my-3">${this.$parent.alertMessage.content[i]}</div>`;
             }
-            this.contentHtml = html;
+            return html;
         },
     },
 };
