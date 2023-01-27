@@ -8,6 +8,15 @@
         <router-link class="nav-link" to="/hall-of-fame">名人堂</router-link>
         <router-link class="nav-link" to="/reincarnation">轉生</router-link>
         <router-link class="nav-link" to="/reports">戰報</router-link>
+        <select class="nav-link ms-2 ps-2" v-model="$parent.currentPlayer">
+            <option
+                v-for="(playerName, playerIndex) in Object.keys($parent.players)"
+                :value="playerName"
+                :key="playerIndex"
+            >
+                {{ playerName }}
+            </option>
+        </select>
         <a class="nav-link final" @click="toggleTheme">
             <theme-switcher style="width: 28px" />
         </a>
@@ -32,6 +41,12 @@ export default {
                 document.querySelector('html').dataset.bsTheme = 'dark';
                 document.querySelector('body').className = 'dark';
             }
+        },
+    },
+    watch: {
+        player(n, o) {
+            this.$parent.currentPlayer = n;
+            this.$parent.getPlayerInfo();
         },
     },
 };
@@ -86,6 +101,10 @@ nav.navbar {
             background-color: var(--primary-fg-color);
             color: var(--primary-bg-color);
         }
+    }
+
+    select.nav-link {
+        color: var(--primary-bg-color);
     }
 }
 </style>

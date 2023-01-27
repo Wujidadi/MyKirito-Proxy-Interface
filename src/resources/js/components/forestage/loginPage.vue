@@ -100,8 +100,9 @@ export default {
                 },
             })
                 .then(response => {
-                    if (response.data && response.data.data && response.data.data.jwt) {
+                    if (response.data && response.data.data && response.data.data.jwt && response.data.data.player_tokens) {
                         localStorage.setItem('Token', response.data.data.jwt.access_token);
+                        localStorage.setItem('PlayerTokens', JSON.stringify(response.data.data.player_tokens));
                         let nextPage = localStorage.getItem('From') || this.homePage;
                         this.$router.push(nextPage);
                     }
