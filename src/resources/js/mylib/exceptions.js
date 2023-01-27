@@ -1,8 +1,4 @@
 class BasicException {
-    code;
-    message;
-    data;
-
     constructor(code = 1, message = 'error', data = {}) {
         this.code = code;
         this.message = message;
@@ -10,8 +6,7 @@ class BasicException {
     }
 }
 
-class FormException extends BasicException {
-}
+class FormException extends BasicException {}
 
 export default {
     FormException,

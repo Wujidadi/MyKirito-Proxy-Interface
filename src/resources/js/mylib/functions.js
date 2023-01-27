@@ -1,4 +1,3 @@
-import * as Bootstrap from 'bootstrap';
 import myDefs from './definitions';
 
 const auth = async function () {
