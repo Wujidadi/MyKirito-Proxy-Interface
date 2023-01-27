@@ -1,15 +1,15 @@
 import './bootstrap';
 
-import PlayerInfoPage from '@/js/components/forestage/playerInfoPage.vue';
-import UserListPage from '@/js/components/forestage/userListPage.vue';
-import BossPage from '@/js/components/forestage/bossPage.vue';
-import AchievementsPage from '@/js/components/forestage/achievementsPage.vue';
-import AchievementRankingPage from '@/js/components/forestage/achievementRankingPage.vue';
-import HallOfFamePage from '@/js/components/forestage/hallOfFamePage.vue';
-import ReincarnationPage from '@/js/components/forestage/reincarnationPage.vue';
-import ReportsPage from '@/js/components/forestage/reportsPage.vue';
-import LoginPage from '@/js/components/forestage/loginPage.vue';
-import RegisterPage from '@/js/components/forestage/registerPage.vue';
+import PlayerInfoPage from '@/js/components/forestage/pages/playerInfoPage.vue';
+import UserListPage from '@/js/components/forestage/pages/userListPage.vue';
+import BossPage from '@/js/components/forestage/pages/bossPage.vue';
+import AchievementsPage from '@/js/components/forestage/pages/achievementsPage.vue';
+import AchievementRankingPage from '@/js/components/forestage/pages/achievementRankingPage.vue';
+import HallOfFamePage from '@/js/components/forestage/pages/hallOfFamePage.vue';
+import ReincarnationPage from '@/js/components/forestage/pages/reincarnationPage.vue';
+import ReportsPage from '@/js/components/forestage/pages/reportsPage.vue';
+import LoginPage from '@/js/components/forestage/pages/loginPage.vue';
+import RegisterPage from '@/js/components/forestage/pages/registerPage.vue';
 
 const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),

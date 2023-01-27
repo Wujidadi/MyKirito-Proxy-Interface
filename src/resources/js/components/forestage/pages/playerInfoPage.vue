@@ -1,9 +1,9 @@
 <template>
     <div class="page">
-        <div class="content" id="playerInfoAndActions">
-            <div class="field" id="personalInfoField">
+        <div class="content">
+            <div class="field">
                 <h3 class="title">我的桐人</h3>
-                <table class="info-table" id="personalInfo">
+                <table class="info-table">
                     <caption>我的桐人玩家個人基本資料</caption>
                     <tbody>
                         <tr class="beside-avatar">
