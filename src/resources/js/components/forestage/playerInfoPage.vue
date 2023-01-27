@@ -9,7 +9,7 @@
                         <tr class="beside-avatar">
                             <th class="head-1" scope="col">暱稱</th>
                             <td class="content-1" :class="colorName">{{ $root.currentPlayerInfo.nickname }}</td>
-                            <td class="avatar text-center" colspan="2" rowspan="3">
+                            <td class="avatar text-center" colspan="2" rowspan="4">
                                 <img class="personal-info-avatar" src="/images/avatars/godRecon.webp" alt="God Recon" />
                             </td>
                         </tr>
@@ -20,6 +20,10 @@
                         <tr class="beside-avatar">
                             <th class="head-1" scope="col">稱號</th>
                             <td class="content-1">{{ $root.currentPlayerInfo.title }}</td>
+                        </tr>
+                        <tr class="beside-avatar">
+                            <th class="head-1" scope="col">樓層</th>
+                            <td class="content-1 floor">{{ $root.currentPlayerInfo.floor }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">等級</th>
@@ -82,10 +86,16 @@
                             <td class="content-2">{{ $root.currentPlayerInfo.totalWin }}</td>
                         </tr>
                         <tr>
-                            <th class="head-1" scope="col">轉生次數</th>
-                            <td class="content-1">{{ $root.currentPlayerInfo.reincarnation }}</td>
+                            <th class="head-1" scope="col">行動總次數</th>
+                            <td class="content-1">{{ $root.currentPlayerInfo.actionCount }}</td>
                             <th class="head-2" scope="col">總敗場</th>
                             <td class="content-2">{{ $root.currentPlayerInfo.totalLose }}</td>
+                        </tr>
+                        <tr>
+                            <th class="head-1" scope="col">轉生次數</th>
+                            <td class="content-1">{{ $root.currentPlayerInfo.reincarnation }}</td>
+                            <th class="head-2" scope="col">挑戰總次數</th>
+                            <td class="content-2">{{ $root.currentPlayerInfo.challengeCount }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">玻璃值</th>
@@ -100,10 +110,12 @@
                             <td class="content-2 to-next-level">{{ toNextLevel }}</td>
                         </tr>
                         <tr>
-                            <th class="head-1" scope="col">上次爬塔</th>
-                            <td class="content-1 last-time">{{ parseTime('lastBossChallenge') }}</td>
-                            <th class="head-2" scope="col">上次領樓層</th>
-                            <td class="content-2 last-time">{{ parseTime('lastFloorBonus') }}</td>
+                            <th class="head-1" scope="col">成就點數</th>
+                            <td class="content-1 achievement">{{ $root.currentPlayerInfo.achievementPoints }}</td>
+                            <th class="head-2" scope="col">記憶碎片</th>
+                            <td class="content-2 fragment">
+                                {{ $root.fragment[this.$root.currentPlayerInfo.fragment] }}
+                            </td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">上次行動</th>
@@ -112,16 +124,16 @@
                             <td class="content-2 last-time">{{ parseTime('lastChallenge') }}</td>
                         </tr>
                         <tr>
+                            <th class="head-2" scope="col">上次領樓層</th>
+                            <td class="content-2 last-time">{{ parseTime('lastFloorBonus') }}</td>
+                            <th class="head-1" scope="col">上次爬塔</th>
+                            <td class="content-1 last-time">{{ parseTime('lastBossChallenge') }}</td>
+                        </tr>
+                        <tr>
                             <th class="head-1" scope="col">上次改狀態</th>
                             <td class="content-1 last-time">{{ parseTime('lastStatus') }}</td>
                             <th class="head-2" scope="col">通過100層</th>
                             <td class="content-2 last-time">{{ parseTime('cleared') }}</td>
-                        </tr>
-                        <tr>
-                            <th class="head-1" scope="col">目前層數</th>
-                            <td class="content-1 floor">{{ $root.currentPlayerInfo.floor }}</td>
-                            <th class="head-2" scope="col">記憶碎片</th>
-                            <td class="content-2 fragment">{{ $root.fragment[this.$root.currentPlayerInfo.fragment] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -223,6 +235,10 @@ td {
         }
     }
 
+    &.floor {
+        color: var(--pink-info-color);
+    }
+
     &.murder {
         color: var(--cyan-info-color);
     }
@@ -243,7 +259,7 @@ td {
         color: var(--purple-info-color);
     }
 
-    &.floor {
+    &.achievement {
         color: var(--yellow-info-color);
     }
 
@@ -258,7 +274,7 @@ img.personal-info-avatar {
 }
 
 tr.beside-avatar {
-    $avatar-rowspan: 3;
+    $avatar-rowspan: 4;
     $row-margin: 9.5;
 
     th,
