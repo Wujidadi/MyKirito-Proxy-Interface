@@ -165,17 +165,23 @@ export default {
         },
         toNextLevel() {
             const level = this.$root.currentPlayerInfo.lv;
-            if (level < 70) {
-                const exp = this.$root.currentPlayerInfo.exp;
-                const nextLevelExp = this.$root.threshold[level + 1];
-                return nextLevelExp - exp;
+            if (level !== null) {
+                if (level < 70) {
+                    const exp = this.$root.currentPlayerInfo.exp;
+                    const nextLevelExp = this.$root.threshold[level + 1];
+                    return nextLevelExp - exp;
+                }
+                return '滿級';
             }
-            return '滿級';
+            return null;
         },
         protection() {
             const murder = this.$root.currentPlayerInfo.murder;
             const defDeath = this.$root.currentPlayerInfo.defDeath;
-            return murder * 5 + 1 - defDeath;
+            if (murder !== null && defDeath !== null) {
+                return murder * 5 + 1 - defDeath;
+            }
+            return null;
         },
     },
 };

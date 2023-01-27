@@ -140,8 +140,11 @@ if (document.querySelector('#app')) {
             },
         },
         watch: {
-            currentPlayer(n, o) {
+            async currentPlayer(n, o) {
                 if (n !== o) {
+                    if (!(await MyFuncs.auth())) {
+                        return;
+                    }
                     this.getPlayerInfo();
                     localStorage.setItem('CurrentPlayer', n);
                 }

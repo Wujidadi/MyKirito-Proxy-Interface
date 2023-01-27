@@ -109,7 +109,7 @@ const router = VueRouter.createRouter({
 
 router.beforeEach(async (to, from) => {
     rememberFrom(from, to);
-    let isAuthenticated = await auth();
+    let isAuthenticated = await MyFuncs.auth();
     if (to.meta.requiresAuth && !isAuthenticated && to.name !== 'Login') {
         return {
             name: 'Login',
@@ -122,34 +122,6 @@ const rememberFrom = function (from, to) {
     if (typeof from.name !== 'undefined' && from.name !== 'Login' && from.name !== to.name) {
         localStorage.setItem('From', from.path);
     }
-};
-
-const auth = async function () {
-    let isPass = false;
-    if (localStorage.getItem('Token')) {
-        const jwt = localStorage.getItem('Token');
-        await axios({
-            method: 'post',
-            url: '/api/token/verify',
-            headers: {
-                authorization: `Bearer ${jwt}`,
-            },
-        })
-            .then(response => {
-                if (response.data && response.data.id && response.data.name) {
-                    isPass = true;
-                } else {
-                    isPass = false;
-                }
-            })
-            .catch(error => {
-                isPass = false;
-            });
-    }
-    if (!isPass) {
-        localStorage.removeItem('Token');
-    }
-    return isPass;
 };
 
 export default router;
