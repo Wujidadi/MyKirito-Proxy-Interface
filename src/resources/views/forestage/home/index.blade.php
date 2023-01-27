@@ -10,6 +10,7 @@
     <div id="app">
         <navbar></navbar>
         <div class="main">
+            <dead-band></dead-band>
             <router-view></router-view>
         </div>
     </div>

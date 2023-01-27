@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Constants\ErrDef;
+use App\Services\PlayerTokenService;
 use App\Traits\JsonResponseBuilder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -82,12 +83,14 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token): JsonResponse
     {
+        $playerTokens = resolve(PlayerTokenService::class)->getPlayerTokens();
         return $this->jsonResponse(ErrDef::OK, [
             'jwt' => [
                 'access_token' => $token,
                 'token_type' => 'bearer',
                 'expires_in' => Auth::factory()->getTTL() * 60,
             ],
+            'player_tokens' => $playerTokens,
         ]);
     }
 }

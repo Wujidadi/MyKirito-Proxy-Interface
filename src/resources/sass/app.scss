@@ -4,6 +4,10 @@
 @import 'dark';
 @import 'light';
 
+.hidden {
+    display: none !important;
+}
+
 body {
     div.main {
         margin: {

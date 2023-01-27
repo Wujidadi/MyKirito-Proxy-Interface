@@ -8,115 +8,120 @@
                     <tbody>
                         <tr class="beside-avatar">
                             <th class="head-1" scope="col">暱稱</th>
-                            <td class="content-1">TSK</td>
+                            <td class="content-1" :class="colorName">{{ $root.currentPlayerInfo.nickname }}</td>
                             <td class="avatar text-center" colspan="2" rowspan="3">
                                 <img class="personal-info-avatar" src="/images/avatars/godRecon.webp" alt="God Recon" />
                             </td>
                         </tr>
                         <tr class="beside-avatar">
                             <th class="head-1" scope="col">角色</th>
-                            <td class="content-1">神</td>
+                            <td class="content-1">{{ $root.currentPlayerInfo.character }}</td>
                         </tr>
                         <tr class="beside-avatar">
                             <th class="head-1" scope="col">稱號</th>
-                            <td class="content-1">神</td>
+                            <td class="content-1">{{ $root.currentPlayerInfo.title }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">等級</th>
-                            <td class="content-1">67</td>
+                            <td class="content-1">{{ $root.currentPlayerInfo.lv }}</td>
                             <th class="head-2" scope="col">經驗值</th>
-                            <td class="content-2">62350</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.exp }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">HP</th>
-                            <td class="content-1">2450</td>
+                            <td class="content-1" v-html="buildAttrHtml('hp')"></td>
                             <th class="head-2" scope="col">主動擊殺</th>
-                            <td class="content-2">0</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.kill }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">攻擊</th>
-                            <td class="content-1">181</td>
+                            <td class="content-1" v-html="buildAttrHtml('atk')"></td>
                             <th class="head-2" scope="col">防衛擊殺</th>
-                            <td class="content-2">0</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.defKill }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">防禦</th>
-                            <td class="content-1">284</td>
+                            <td class="content-1" v-html="buildAttrHtml('def')"></td>
                             <th class="head-2" scope="col">總主動擊殺</th>
-                            <td class="content-2">0</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.totalKill }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">體力</th>
-                            <td class="content-1">251</td>
+                            <td class="content-1" v-html="buildAttrHtml('stm')"></td>
                             <th class="head-2" scope="col">總防衛擊殺</th>
-                            <td class="content-2">67</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.totalDefKill }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">敏捷</th>
-                            <td class="content-1">172</td>
+                            <td class="content-1" v-html="buildAttrHtml('agi')"></td>
                             <th class="head-2" scope="col">遭襲死亡</th>
-                            <td class="content-2">25</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.defDeath }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">反應速度</th>
-                            <td class="content-1">186</td>
+                            <td class="content-1" v-html="buildAttrHtml('spd')"></td>
                             <th class="head-2" scope="col">遭反殺死亡</th>
-                            <td class="content-2">31</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.totalDeath }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">技巧</th>
-                            <td class="content-1">273</td>
+                            <td class="content-1" v-html="buildAttrHtml('tec')"></td>
                             <th class="head-2" scope="col">勝場</th>
-                            <td class="content-2">347</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.win }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">智力</th>
-                            <td class="content-1">
-                                1395
-                                <span class="rattr">(+984)</span>
-                            </td>
+                            <td class="content-1" v-html="buildAttrHtml('int')"></td>
                             <th class="head-2" scope="col">敗場</th>
-                            <td class="content-2">115</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.lose }}</td>
                         </tr>
                         <tr>
                             <th class="head-1 ability" scope="col">幸運</th>
-                            <td class="content-1">9999</td>
+                            <td class="content-1" v-html="buildAttrHtml('lck')"></td>
                             <th class="head-2" scope="col">總勝場</th>
-                            <td class="content-2">72773</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.totalWin }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">轉生次數</th>
-                            <td class="content-1">349</td>
+                            <td class="content-1">{{ $root.currentPlayerInfo.reincarnation }}</td>
                             <th class="head-2" scope="col">總敗場</th>
-                            <td class="content-2">34330</td>
+                            <td class="content-2">{{ $root.currentPlayerInfo.totalLose }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">玻璃值</th>
-                            <td class="content-1 murder">4</td>
-                            <th class="head-2" scope="col">機器人等級</th>
-                            <td class="content-2 bot-lv">0</td>
+                            <td class="content-1 murder">{{ $root.currentPlayerInfo.murder }}</td>
+                            <th class="head-2" scope="col">洗白點數</th>
+                            <td class="content-2 reset">{{ $root.currentPlayerInfo.reset }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">保護狀態</th>
-                            <td class="content-1 protection">0</td>
+                            <td class="content-1 protection">{{ protection }}</td>
                             <th class="head-2" scope="col">距離升級</th>
-                            <td class="content-2 to-next-level">30</td>
+                            <td class="content-2 to-next-level">{{ toNextLevel }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">上次爬塔</th>
-                            <td class="content-1 last-time">2023-01-03 10:42:30</td>
+                            <td class="content-1 last-time">{{ parseTime('lastBossChallenge') }}</td>
                             <th class="head-2" scope="col">上次領樓層</th>
-                            <td class="content-2 last-time">2023-01-11 23:23:28</td>
+                            <td class="content-2 last-time">{{ parseTime('lastFloorBonus') }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">上次行動</th>
-                            <td class="content-1 last-time">2023-01-11 23:23:27</td>
+                            <td class="content-1 last-time">{{ parseTime('lastAction') }}</td>
                             <th class="head-2" scope="col">上次挑戰</th>
-                            <td class="content-2 last-time">2023-01-11 23:32:13</td>
+                            <td class="content-2 last-time">{{ parseTime('lastChallenge') }}</td>
                         </tr>
                         <tr>
                             <th class="head-1" scope="col">上次改狀態</th>
-                            <td class="content-1 last-time" colspan="3">2022-02-20 22:37:53</td>
+                            <td class="content-1 last-time">{{ parseTime('lastStatus') }}</td>
+                            <th class="head-2" scope="col">通過100層</th>
+                            <td class="content-2 last-time">{{ parseTime('cleared') }}</td>
+                        </tr>
+                        <tr>
+                            <th class="head-1" scope="col">目前層數</th>
+                            <td class="content-1 floor">{{ $root.currentPlayerInfo.floor }}</td>
+                            <th class="head-2" scope="col">記憶碎片</th>
+                            <td class="content-2 fragment">{{ $root.fragment[this.$root.currentPlayerInfo.fragment] }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -128,6 +133,51 @@
 <script>
 export default {
     name: 'PlayerInfoPage',
+    methods: {
+        buildAttrHtml(attr) {
+            let value = this.$root.currentPlayerInfo[attr];
+            let html = value.toString();
+            if (this.$root.currentPlayerInfo.rattrs[attr] > 0) {
+                value += this.$root.currentPlayerInfo.rattrs[attr];
+                html = `${value.toString()} <span class="rattr">(+${this.$root.currentPlayerInfo.rattrs[attr]})</span>`;
+            }
+            return html;
+        },
+        parseTime(type) {
+            const timestamp = this.$root.currentPlayerInfo[type];
+            if (timestamp !== undefined && timestamp !== null) {
+                return moment(timestamp).format('YYYY-MM-DD HH:mm:ss.SSS');
+            }
+            return null;
+        },
+    },
+    computed: {
+        colorName() {
+            switch (this.$root.currentPlayerInfo.color) {
+                case 'red':
+                    return 'nickname-red';
+                case 'orange':
+                    return 'nickname-orange';
+                case 'black':
+                default:
+                    return 'nickname-black';
+            }
+        },
+        toNextLevel() {
+            const level = this.$root.currentPlayerInfo.lv;
+            if (level < 70) {
+                const exp = this.$root.currentPlayerInfo.exp;
+                const nextLevelExp = this.$root.threshold[level + 1];
+                return nextLevelExp - exp;
+            }
+            return '滿級';
+        },
+        protection() {
+            const murder = this.$root.currentPlayerInfo.murder;
+            const defDeath = this.$root.currentPlayerInfo.defDeath;
+            return murder * 5 + 1 - defDeath;
+        },
+    },
 };
 </script>
 
@@ -158,12 +208,21 @@ td {
         width: 50% - $th-width;
     }
 
-    &.murder {
-        color: var(--blue-info-color);
+    &.nickname {
+        &-orange {
+            color: var(--nickname-orange-color);
+        }
+        &-red {
+            color: var(--nickname-red-color);
+        }
     }
 
-    &.bot-lv {
-        color: var(--green-info-color);
+    &.murder {
+        color: var(--cyan-info-color);
+    }
+
+    &.reset {
+        color: var(--blue-info-color);
     }
 
     &.protection {
@@ -171,11 +230,19 @@ td {
     }
 
     &.to-next-level {
-        color: var(--yellow-info-color);
+        color: var(--gold-info-color);
     }
 
     &.last-time {
         color: var(--purple-info-color);
+    }
+
+    &.floor {
+        color: var(--yellow-info-color);
+    }
+
+    &.fragment {
+        color: var(--green-info-color);
     }
 }
 
