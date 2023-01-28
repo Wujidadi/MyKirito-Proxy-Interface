@@ -8,6 +8,7 @@ namespace App\Constants;
 class ErrDef
 {
     public const OK = '0';
+    public const PROXY_API_OK = '0.0';
 
     public const GENERAL_ERROR = '1';
     public const INPUT_ERROR = '2';
@@ -21,6 +22,7 @@ class ErrDef
 
     public const MESSAGE = [
         self::OK => 'OK',
+        self::PROXY_API_OK => 'Proxy API OK',
 
         self::GENERAL_ERROR => 'General error',
         self::INPUT_ERROR => 'Input error',

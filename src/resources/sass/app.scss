@@ -105,6 +105,12 @@ body {
                 border-color: var(--btn-negative-hover-border);
             }
         }
+
+        &:disabled {
+            background-color: var(--btn-bg-color-disabled) !important;
+            color: white !important;
+            opacity: initial !important;
+        }
     }
 
     span.rattr {

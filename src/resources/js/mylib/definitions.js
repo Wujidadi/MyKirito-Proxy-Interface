@@ -7,7 +7,10 @@ const myKiritoUrl = {
     api: myKiritoApiBaseUrl,
 };
 
+const commonJsonContentType = 'application/json; charset=UTF-8';
+
 export default {
     defaultPageTitle,
     myKiritoUrl,
+    commonJsonContentType,
 };

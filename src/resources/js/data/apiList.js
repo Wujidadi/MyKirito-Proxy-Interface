@@ -1,10 +1,10 @@
 import myDefs from '@/js/mylib/definitions';
 
 const myKiritoApi = {
-    personalInfo: { method: 'GET', url: myDefs.myKiritoUrl.api + '/my-kirito' },
-    updateStatus: { method: 'POST', url: myDefs.myKiritoUrl.api + '/my-kirito/status' },
-    setTeammate: { method: 'POST', url: myDefs.myKiritoUrl.api + '/my-kirito/teammate' },
-    getFloorBonus: { method: 'POST', url: myDefs.myKiritoUrl.api + '/my-kirito/doaction?u=' },
+    personalInfo: { method: 'GET', url: '/api/my-kirito/player-info' },
+    updateStatus: { method: 'POST', url: '/api/my-kirito/player-status' },
+    setTeammate: { method: 'POST', url: '/api/my-kirito/teammate' },
+    doAction: { method: 'POST', url: '/api/my-kirito/do-action' },
 };
 
 export default {

@@ -53,6 +53,23 @@ if (document.querySelector('#app')) {
                 this.alertMessage.content = content;
                 this.alertModal.show();
             },
+            checkApiResponseData(response) {
+                return response.data.data && response.data.data[0];
+            },
+            checkApiResponseError(response) {
+                return response.data.error && response.data.error.code && response.data.error.code === '0.0';
+            },
+            getErrorMessage(response) {
+                if (response.data.data[0].error) {
+                    return response.data.data[0].error;
+                } else if (response.data.error) {
+                    if (response.data.error.message) {
+                        return response.data.error.message;
+                    }
+                    return response.data.error;
+                }
+                return '未知錯誤';
+            },
             parsePlayers() {
                 const playerTokens = JSON.parse(localStorage.getItem('PlayerTokens'));
                 if (playerTokens && playerTokens instanceof Object) {
@@ -65,14 +82,14 @@ if (document.querySelector('#app')) {
             getPlayerInfo() {
                 axios({
                     method: this.api.myKiritoApi.personalInfo.method,
-                    url: this.api.myKiritoApi.personalInfo.url,
+                    url: `${this.api.myKiritoApi.personalInfo.url}?player=${this.currentPlayer}`,
                     headers: {
-                        token: this.players[this.currentPlayer].token,
+                        authorization: `Bearer ${localStorage.getItem('Token')}`,
                     },
                 })
                     .then(response => {
-                        if (response.data) {
-                            this.setPlayerInfo(response.data);
+                        if (response.data && this.checkApiResponseData(response) && this.checkApiResponseError(response)) {
+                            this.setPlayerInfo(response.data.data[0]);
                         }
                     })
                     .catch(error => {

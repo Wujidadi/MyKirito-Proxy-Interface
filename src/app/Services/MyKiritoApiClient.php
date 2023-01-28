@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Constants\MyKirito\Api as MyKiritoApi;
 use App\Utilities\Client\ClientFactory;
+use App\Utilities\Log\Facade as LogFacade;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\TooManyRedirectsException;
@@ -44,6 +45,11 @@ class MyKiritoApiClient
                 HttpRequestOptions::SYNCHRONOUS => isset($params['isAsyncRequest']) ? (!$params['isAsyncRequest']) : false,
                 HttpRequestOptions::HTTP_ERRORS => false,
             ]);
+            if (!empty($params['body'])) {
+                $options[HttpRequestOptions::BODY] = $params['body'];
+            }
+
+            LogFacade::mykirito()->debug('%s %s %s', $method, $uri, $options);
 
             $response = $this->client->request($method, $uri, $options);
 

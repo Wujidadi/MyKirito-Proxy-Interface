@@ -179,7 +179,7 @@
                             <td v-html="floorBonusHintHtml"></td>
                         </tr>
                         <tr>
-                            <button type="button" class="btn btn-negative action mt-2 px-3" @click="getFloorBonus">領取獎勵</button>
+                            <button type="button" class="btn btn-negative action mt-2 px-3" :disabled="isDisabled('floorBonus')" @click="getFloorBonus">領取獎勵</button>
                         </tr>
                     </tbody>
                 </table>
@@ -256,76 +256,91 @@ export default {
         updateStatus() {
             axios({
                 method: this.$root.api.myKiritoApi.updateStatus.method,
-                url: this.$root.api.myKiritoApi.updateStatus.url,
+                url: `${this.$root.api.myKiritoApi.updateStatus.url}?player=${this.$root.currentPlayer}`,
                 headers: {
-                    'content-type': 'application/json; charset=UTF-8',
-                    token: this.$root.players[this.$root.currentPlayer].token,
+                    'content-type': myDefs.commonJsonContentType,
+                    authorization: `Bearer ${localStorage.getItem('Token')}`,
                 },
                 data: {
                     status: this.$root.currentPlayerInfo.status,
                 },
             })
                 .then(response => {
-                    this.$root.alert('更新玩家狀態', '更新成功');
+                    if (response.data && this.$root.checkApiResponseData(response) && this.$root.checkApiResponseError(response)) {
+                        this.$root.alert('更新玩家狀態', '更新成功');
+                    } else {
+                        console.warn(response);
+                    }
                 })
                 .catch(error => {
-                    this.$root.alert('更新玩家狀態', error.response.data.error);
+                    this.$root.alert('更新玩家狀態', this.$root.getErrorMessage(error.response));
                 });
         },
         setTeammate() {
             axios({
                 method: this.$root.api.myKiritoApi.setTeammate.method,
-                url: this.$root.api.myKiritoApi.setTeammate.url,
+                url: `${this.$root.api.myKiritoApi.setTeammate.url}?player=${this.$root.currentPlayer}`,
                 headers: {
-                    'content-type': 'application/json; charset=UTF-8',
-                    token: this.$root.players[this.$root.currentPlayer].token,
+                    'content-type': myDefs.commonJsonContentType,
+                    authorization: `Bearer ${localStorage.getItem('Token')}`,
                 },
                 data: {
                     teammate: this.$root.currentPlayerInfo.teammateNickname,
                 },
             })
                 .then(response => {
-                    if (response.data.teammateUID) {
-                        this.$root.alert('設定隊友', '設定成功');
-                        this.$root.currentPlayerInfo.teammate = this.$root.currentPlayerInfo.teammateNickname;
-                        this.$root.currentPlayerInfo.teammateUID = response.data.teammateUID;
-                    } else {
-                        if (this.$root.currentPlayerInfo.teammateUID) {
-                            this.$root.alert('設定隊友', '隊伍已解除');
-                            this.$root.currentPlayerInfo.teammate = '';
-                            this.$root.currentPlayerInfo.teammateUID = false;
+                    if (response.data && this.$root.checkApiResponseData(response) && this.$root.checkApiResponseError(response)) {
+                        if (response.data.data[0].teammateUID) {
+                            this.$root.alert('設定隊友', '設定成功');
+                            this.$root.currentPlayerInfo.teammate = this.$root.currentPlayerInfo.teammateNickname;
+                            this.$root.currentPlayerInfo.teammateUID = response.data.teammateUID;
+                        } else {
+                            if (this.$root.currentPlayerInfo.teammateUID) {
+                                this.$root.alert('設定隊友', '隊伍已解除');
+                                this.$root.currentPlayerInfo.teammate = '';
+                                this.$root.currentPlayerInfo.teammateUID = false;
+                            } else {
+                                console.log('隊友未變更');
+                            }
                         }
+                    } else {
+                        console.warn(response);
                     }
                 })
                 .catch(error => {
-                    this.$root.alert('設定隊友', error.response.data.error);
+                    this.$root.alert('設定隊友', this.$root.getErrorMessage(error.response));
                 });
         },
         getFloorBonus() {
             axios({
-                method: this.$root.api.myKiritoApi.getFloorBonus.method,
-                url: this.$root.api.myKiritoApi.getFloorBonus.url + this.$root.players[this.$root.currentPlayer].player_id,
+                method: this.$root.api.myKiritoApi.doAction.method,
+                url: `${this.$root.api.myKiritoApi.doAction.url}?player=${this.$root.currentPlayer}`,
                 headers: {
-                    'content-type': 'application/json; charset=UTF-8',
-                    token: this.$root.players[this.$root.currentPlayer].token,
+                    'content-type': myDefs.commonJsonContentType,
+                    authorization: `Bearer ${localStorage.getItem('Token')}`,
                 },
                 data: {
                     action: 'floorBonus',
                 },
             })
                 .then(response => {
-                    if (response.data.message === '領取成功！' && response.data.myKirito) {
-                        this.$root.currentPlayerInfo.exp = response.data.myKirito.exp;
-                        this.$root.currentPlayerInfo.lv = response.data.myKirito.lv;
-                        this.$root.currentPlayerInfo.lastAction = response.data.myKirito.lastAction;
-                        this.$root.currentPlayerInfo.lastFloorBonus = response.data.myKirito.lastFloorBonus;
-                        this.$root.currentPlayerInfo.actionCount = response.data.myKirito.actionCount;
+                    if (response.data && this.$root.checkApiResponseData(response) && this.$root.checkApiResponseError(response)) {
+                        if (response.data.data[0].message === '領取成功！' && response.data.data[0].myKirito) {
+                            const result = response.data.data[0].myKirito;
+                            this.$root.currentPlayerInfo.exp = result.exp;
+                            this.$root.currentPlayerInfo.lv = result.lv;
+                            this.$root.currentPlayerInfo.lastAction = result.lastAction;
+                            this.$root.currentPlayerInfo.lastFloorBonus = result.lastFloorBonus;
+                            this.$root.currentPlayerInfo.actionCount = result.actionCount;
+                        } else {
+                            console.warn('領取樓層獎勵特別狀況：', response);
+                        }
                     } else {
                         console.warn(response);
                     }
                 })
                 .catch(error => {
-                    this.$root.alert('領取樓層獎勵', error.response.data.error);
+                    this.$root.alert('設定隊友', this.$root.getErrorMessage(error.response));
                 });
         },
         huntRabbit() {
@@ -351,6 +366,16 @@ export default {
         },
         practice(hour) {
             //
+        },
+        isDisabled(action) {
+            switch (action) {
+                case 'floorBonus':
+                    if (this.$root.timeRemain.floorBonus > 0 || this.$root.currentPlayerInfo.floor < 1) {
+                        return true;
+                    }
+                    break;
+            }
+            return false;
         },
     },
     computed: {
