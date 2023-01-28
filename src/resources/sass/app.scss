@@ -11,7 +11,7 @@
 body {
     div.main {
         margin: {
-            top: $main-page-top-gap;
+            top: $navbar-height + $main-page-top-gap;
             bottom: 0;
         }
 

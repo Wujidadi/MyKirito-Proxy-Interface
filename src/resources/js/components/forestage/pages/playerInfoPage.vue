@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <div class="content">
-            <div class="field">
+            <div class="field" id="playerInfo">
                 <h3 class="title">我的桐人</h3>
                 <table class="info-table">
                     <caption>我的桐人玩家個人基本資料</caption>
@@ -140,7 +140,7 @@
             </div>
             <div class="field" id="settings">
                 <h3 class="title">設定</h3>
-                <table class="table table-borderless">
+                <table class="table table-borderless mb-0">
                     <caption>玩家狀態及隊友設定</caption>
                     <tbody>
                         <tr>
@@ -165,11 +165,63 @@
                             <td colspan="3" v-html="teammateHtml"></td>
                         </tr>
                         <tr>
-                            <td colspan="3">
-                                對方也必須輸入你的暱稱，並且與你在相同的樓層。當雙方互相設定且同層數時隊伍將自動成立。隊伍僅於挑戰Boss時作用，只要有任一人挑戰Boss就會自動一起上陣
+                            <td colspan="3">對方也必須輸入你的暱稱，並且與你在相同的樓層。當雙方互相設定且同層數時隊伍將自動成立。隊伍僅於挑戰Boss時作用，只要有任一人挑戰Boss就會自動一起上陣</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="field" id="floorBonus">
+                <h3 class="title">樓層獎勵</h3>
+                <table class="table table-borderless mb-0">
+                    <caption>領取樓層獎勵</caption>
+                    <tbody>
+                        <tr>
+                            <td v-html="floorBonusHintHtml"></td>
+                        </tr>
+                        <tr>
+                            <button type="button" class="btn btn-negative action mt-2 px-3" @click="getFloorBonus">領取獎勵</button>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="field" id="actions">
+                <h3 class="title">行動</h3>
+                <table class="table table-borderless mb-0">
+                    <caption>行動（練功）</caption>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="huntRabbit">狩獵兔肉</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="selfTraining">自主訓練</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="goPicnic">外出野餐</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="chaseGirl">汁妹</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="doGood">做善事</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="sitRest">坐下休息</button>
+                                <button type="button" class="btn btn-negative action mt-2 px-3" @click="goFishing">釣魚</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-3">修行高CD但可一次獲得較多經驗（與一般行動共用CD），請注意死亡或轉生後CD仍會持續，主要提供給沒時間一直玩的人使用。不定期抓腳本、自動點擊及按鍵精靈，抓到將受永久性懲罰或直接封鎖帳號。</td>
+                        </tr>
+                        <tr>
+                            <td class="pt-3">目前修行功能需攻略第一層Boss、或是等級大於25、或累積一定遊玩量後才能使用。</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(1)">修行1小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(2)">修行2小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(4)">修行4小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 px-3" @click="practice(8)">修行8小時</button>
                             </td>
                         </tr>
                     </tbody>
+                </table>
+            </div>
+            <div class="field" id="actions">
+                <h3 class="title">行動紀錄</h3>
+                <table class="table table-borderless mb-0">
+                    <caption>行動及領取樓層獎勵紀錄</caption>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -181,6 +233,9 @@ import myDefs from '@/js/mylib/definitions';
 
 export default {
     name: 'PlayerInfoPage',
+    data() {
+        return {};
+    },
     methods: {
         buildAttrHtml(attr) {
             let value = this.$root.currentPlayerInfo[attr];
@@ -246,6 +301,57 @@ export default {
                     this.$root.alert('設定隊友', error.response.data.error);
                 });
         },
+        getFloorBonus() {
+            axios({
+                method: this.$root.api.myKiritoApi.getFloorBonus.method,
+                url: this.$root.api.myKiritoApi.getFloorBonus.url + this.$root.players[this.$root.currentPlayer].player_id,
+                headers: {
+                    'content-type': 'application/json; charset=UTF-8',
+                    token: this.$root.players[this.$root.currentPlayer].token,
+                },
+                data: {
+                    action: 'floorBonus',
+                },
+            })
+                .then(response => {
+                    if (response.data.message === '領取成功！' && response.data.myKirito) {
+                        this.$root.currentPlayerInfo.exp = response.data.myKirito.exp;
+                        this.$root.currentPlayerInfo.lv = response.data.myKirito.lv;
+                        this.$root.currentPlayerInfo.lastAction = response.data.myKirito.lastAction;
+                        this.$root.currentPlayerInfo.lastFloorBonus = response.data.myKirito.lastFloorBonus;
+                        this.$root.currentPlayerInfo.actionCount = response.data.myKirito.actionCount;
+                    } else {
+                        console.warn(response);
+                    }
+                })
+                .catch(error => {
+                    this.$root.alert('領取樓層獎勵', error.response.data.error);
+                });
+        },
+        huntRabbit() {
+            //
+        },
+        selfTraining() {
+            //
+        },
+        goPicnic() {
+            //
+        },
+        chaseGirl() {
+            //
+        },
+        doGood() {
+            //
+        },
+        sitRest() {
+            //
+        },
+        goFishing() {
+            //
+        },
+        practice(hour) {
+            //
+        },
     },
     computed: {
         colorName() {
@@ -288,10 +394,16 @@ export default {
             }
             return '隊伍狀態：無';
         },
+        floorBonusHintHtml() {
+            if (this.$root.timeRemain.floorBonus < 0) {
+                return `每 4 小時可以依目前樓層數領取獎勵經驗值 (×100)。目前樓層 ${this.$root.currentPlayerInfo.floor}`;
+            } else {
+                const timeRemain = Math.ceil(this.$root.timeRemain.floorBonus / 1000);
+                return `冷卻倒數：${timeRemain} 秒`;
+            }
+        },
     },
-    mounted() {
-        // this.teammateNickname = this.$root.currentPlayerInfo.teammate;
-    },
+    mounted() {},
 };
 </script>
 

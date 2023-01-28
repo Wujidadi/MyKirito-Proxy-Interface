@@ -6,7 +6,7 @@
     "files.insertFinalNewline": true,
     "htmlWhitespaceSensitivity": "ignore",
     "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-    "printWidth": 120,
+    "printWidth": 1000,
     "semi": true,
     "singleAttributePerLine": false,
     "singleQuote": true,

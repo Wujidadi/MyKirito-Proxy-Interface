@@ -9,11 +9,7 @@
         <router-link class="nav-link" to="/reincarnation">轉生</router-link>
         <router-link class="nav-link" to="/reports">戰報</router-link>
         <select class="nav-link ms-2 ps-2" v-model="$parent.currentPlayer">
-            <option
-                v-for="(playerName, playerIndex) in Object.keys($parent.players)"
-                :value="playerName"
-                :key="playerIndex"
-            >
+            <option v-for="(playerName, playerIndex) in Object.keys($parent.players)" :value="playerName" :key="playerIndex">
                 {{ playerName }}
             </option>
         </select>
@@ -56,6 +52,7 @@ export default {
 @import '@/sass/_variables.scss';
 
 nav.navbar {
+    position: fixed;
     top: 0;
     z-index: 999;
     width: 100%;
@@ -88,12 +85,7 @@ nav.navbar {
 
         &:not(.router-link-active) {
             &:hover {
-                background-color: rgba(
-                    var(--primary-fg-color-r),
-                    var(--primary-fg-color-g),
-                    var(--primary-fg-color-b),
-                    0.2
-                );
+                background-color: rgba(var(--primary-fg-color-r), var(--primary-fg-color-g), var(--primary-fg-color-b), 0.2);
             }
         }
 

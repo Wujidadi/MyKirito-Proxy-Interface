@@ -32,9 +32,27 @@ if (document.querySelector('#app')) {
                 threshold: levelThresholds,
                 fragment: fragments,
                 api: apiList,
+                coolDown: {
+                    floorBonus: 14400000, // 4 hours
+                },
+                timeRemain: {
+                    floorBonus: 0,
+                },
+                interval: {
+                    floorBonus: 0,
+                },
+                refreshInterval: 1000,
             };
         },
         methods: {
+            alert(title = '警告', content = ['錯誤']) {
+                if (typeof content === 'string') {
+                    content = [content];
+                }
+                this.alertMessage.title = title;
+                this.alertMessage.content = content;
+                this.alertModal.show();
+            },
             parsePlayers() {
                 const playerTokens = JSON.parse(localStorage.getItem('PlayerTokens'));
                 if (playerTokens && playerTokens instanceof Object) {
@@ -94,13 +112,12 @@ if (document.querySelector('#app')) {
                     keyboard: false,
                 });
             },
-            alert(title = '警告', content = ['錯誤']) {
-                if (typeof content === 'string') {
-                    content = [content];
-                }
-                this.alertMessage.title = title;
-                this.alertMessage.content = content;
-                this.alertModal.show();
+            countFloorBonusCoolDown() {
+                this.interval.floorBonus = setInterval(() => {
+                    const now = new Date();
+                    this.timeRemain.floorBonus = this.currentPlayerInfo.lastFloorBonus + this.coolDown.floorBonus - now.getTime();
+                    // console.log(this.timeRemain.floorBonus);
+                }, this.refreshInterval);
             },
         },
         watch: {
@@ -121,6 +138,7 @@ if (document.querySelector('#app')) {
             this.initAlertModal();
             this.parsePlayers();
             this.setCurrentPlayer();
+            this.countFloorBonusCoolDown();
         },
     })
         .use(vueStore)
