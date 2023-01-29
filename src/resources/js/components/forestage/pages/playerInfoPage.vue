@@ -10,7 +10,7 @@
                             <th class="head-1" scope="col">暱稱</th>
                             <td class="content-1" :class="colorName">{{ $root.currentPlayerInfo.nickname }}</td>
                             <td class="avatar text-center" colspan="2" rowspan="4">
-                                <img class="personal-info-avatar" src="/images/avatars/godRecon.webp" alt="God Recon" />
+                                <img class="personal-info-avatar" :src="$root.getAvatarUrl($root.currentPlayerInfo.avatar)" :alt="$root.getAvatarAlt($root.currentPlayerInfo.character, $root.currentPlayerInfo.title)" />
                             </td>
                         </tr>
                         <tr class="beside-avatar">
@@ -408,16 +408,7 @@ export default {
                             }
                             let newRecord = `[${recordTime}] ${successMessage}獲得了 ${gained.exp} 點經驗值`;
                             if (gained.prevLV !== gained.nextLV) {
-                                newRecord += `，等級已提升至 ${gained.nextLV}！能力變化如下：<br />` +
-                                    `HP +${gained.hp || 0}<br />` +
-                                    `攻擊 +${gained.atk || 0}<br />` +
-                                    `防禦 +${gained.def || 0}<br />` +
-                                    `體力 +${gained.stm || 0}<br />` +
-                                    `敏捷 +${gained.agi || 0}<br />` +
-                                    `反應速度 +${gained.spd || 0}<br />` +
-                                    `技巧 +${gained.tec || 0}<br />` +
-                                    `智力 +${gained.int || 0}<br />` +
-                                    `幸運 +${gained.luck || 0}`;
+                                newRecord += `，等級已提升至 ${gained.nextLV}！能力變化如下：<br />` + `HP +${gained.hp || 0}<br />` + `攻擊 +${gained.atk || 0}<br />` + `防禦 +${gained.def || 0}<br />` + `體力 +${gained.stm || 0}<br />` + `敏捷 +${gained.agi || 0}<br />` + `反應速度 +${gained.spd || 0}<br />` + `技巧 +${gained.tec || 0}<br />` + `智力 +${gained.int || 0}<br />` + `幸運 +${gained.luck || 0}`;
                             }
                             if (gained.nextTitle && gained.prevTitle !== gained.nextTitle) {
                                 newRecord += `稱號由 ${gained.prevTitle} 變更為 ${gained.nextTitle}！`;

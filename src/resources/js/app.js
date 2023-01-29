@@ -65,6 +65,12 @@ if (document.querySelector('#app')) {
                     return new Bootstrap.Tooltip(tooltipTriggerEl);
                 });
             },
+            getAvatarUrl(avatar) {
+                return `/images/avatars/${avatar}.webp`;
+            },
+            getAvatarAlt(character, title) {
+                return `${character}（${title}）`;
+            },
             buildTeammateHtml() {
                 const baseUrl = MyDefs.myKiritoUrl.base;
                 const uid = this.currentPlayerInfo.teammateUID;
