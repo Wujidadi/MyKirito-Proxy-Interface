@@ -56,4 +56,9 @@ class MyKiritoController extends Controller
     {
         return $this->ajaxResponse($this->service->doAction($request->input('action')));
     }
+
+    public function getAchievements(Request $request)
+    {
+        return $this->ajaxResponse($this->service->getAchievements());
+    }
 }

@@ -83,4 +83,13 @@ class MyKiritoApiService
         $response = resolve(ApiClient::class)->request($this->requestParams);
         return $response;
     }
+
+    public function getAchievements(): stdClass
+    {
+        $api = ApiList::LIST[ApiList::GET_ACHIEVEMENTS];
+        $this->requestParams['method'] = $api[0];
+        $this->requestParams['uri'] = $api[1];
+        $response = resolve(ApiClient::class)->request($this->requestParams);
+        return $response;
+    }
 }

@@ -18,6 +18,7 @@ if (document.querySelector('#app')) {
         components: vueComponents,
         data() {
             return {
+                api: apiList,
                 players: {},
                 currentPlayer: '',
                 currentPlayerInfo: {},
@@ -31,8 +32,8 @@ if (document.querySelector('#app')) {
                 },
                 threshold: levelThresholds,
                 fragment: fragments,
-                api: apiList,
                 teammateHtml: '',
+                achivements: [],
                 coolDown: {
                     floorBonus: 14400000, // 4 hours
                     action: 66000, // 66 seconds

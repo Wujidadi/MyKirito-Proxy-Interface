@@ -11,7 +11,7 @@
         <navbar></navbar>
         <div class="main">
             <dead-band></dead-band>
-            <router-view></router-view>
+            <router-view :player="currentPlayer" :player-info="currentPlayerInfo"></router-view>
             <alert-modal></alert-modal>
         </div>
     </div>

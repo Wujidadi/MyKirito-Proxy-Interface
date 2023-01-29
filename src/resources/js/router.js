@@ -49,6 +49,7 @@ const router = VueRouter.createRouter({
                 requiresAuth: true,
                 title: '成就',
             },
+            props: true,
         },
         {
             path: '/achievement-ranking',

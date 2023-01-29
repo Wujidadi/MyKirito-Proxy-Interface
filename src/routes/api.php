@@ -14,6 +14,7 @@ Route::group(['middleware' => 'jwt'], function () {
         Route::post('player-status', [\App\Http\Controllers\Api\MyKiritoController::class, 'updatePlayerStatus']);
         Route::post('teammate', [\App\Http\Controllers\Api\MyKiritoController::class, 'setTeammate']);
         Route::post('do-action', [\App\Http\Controllers\Api\MyKiritoController::class, 'doAction']);
+        Route::get('achievements', [\App\Http\Controllers\Api\MyKiritoController::class, 'getAchievements']);
     });
 });
 
