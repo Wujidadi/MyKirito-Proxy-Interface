@@ -32,16 +32,21 @@ if (document.querySelector('#app')) {
                 threshold: levelThresholds,
                 fragment: fragments,
                 api: apiList,
+                teammateHtml: '',
                 coolDown: {
                     floorBonus: 14400000, // 4 hours
+                    action: 66000, // 66 seconds
                 },
                 timeRemain: {
                     floorBonus: 0,
+                    action: 0,
                 },
                 interval: {
                     floorBonus: 0,
+                    action: 1,
                 },
                 refreshInterval: 1000,
+                isSwitchingPlayer: false,
             };
         },
         methods: {
@@ -53,6 +58,22 @@ if (document.querySelector('#app')) {
                 this.alertMessage.content = content;
                 this.alertModal.show();
             },
+            tooltip() {
+                const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+                const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new Bootstrap.Tooltip(tooltipTriggerEl);
+                });
+            },
+            buildTeammateHtml() {
+                const baseUrl = MyDefs.myKiritoUrl.base;
+                const uid = this.currentPlayerInfo.teammateUID;
+                const teammate = this.currentPlayerInfo.teammate;
+                if (uid) {
+                    this.teammateHtml = `隊伍狀態：<a class="teammate" target="_blank" href="${baseUrl}/profile/${uid}">${teammate}</a>`;
+                    return;
+                }
+                this.teammateHtml = '隊伍狀態：無';
+            },
             checkApiResponseData(response) {
                 return response.data.data && response.data.data[0];
             },
@@ -60,10 +81,16 @@ if (document.querySelector('#app')) {
                 return response.data.error && response.data.error.code && response.data.error.code === '0.0';
             },
             getErrorMessage(response) {
+                console.warn(response);
                 if (response.data.data[0].error) {
                     return response.data.data[0].error;
                 } else if (response.data.error) {
                     if (response.data.error.message) {
+                        if (response.data.error.message === 'Proxy API OK') {
+                            if (Math.floor(response.data.status / 100) === 5) {
+                                return '我桐官方伺服器或網路錯誤';
+                            }
+                        }
                         return response.data.error.message;
                     }
                     return response.data.error;
@@ -80,6 +107,7 @@ if (document.querySelector('#app')) {
                 this.currentPlayer = localStorage.getItem('CurrentPlayer') || '';
             },
             getPlayerInfo() {
+                this.isSwitchingPlayer = true;
                 axios({
                     method: this.api.myKiritoApi.personalInfo.method,
                     url: `${this.api.myKiritoApi.personalInfo.url}?player=${this.currentPlayer}`,
@@ -94,6 +122,11 @@ if (document.querySelector('#app')) {
                     })
                     .catch(error => {
                         console.log(error);
+                    })
+                    .finally(() => {
+                        setTimeout(() => {
+                            this.isSwitchingPlayer = false;
+                        }, this.refreshInterval);
                     });
             },
             initCurrentPlayer() {
@@ -113,6 +146,7 @@ if (document.querySelector('#app')) {
                 this.appendPlayerInfo({
                     teammateNickname: data.teammate,
                 });
+                this.buildTeammateHtml();
             },
             appendPlayerInfo(data) {
                 for (let p in this.appendCurrentPlayerInfo) {
@@ -136,6 +170,13 @@ if (document.querySelector('#app')) {
                     // console.log(this.timeRemain.floorBonus);
                 }, this.refreshInterval);
             },
+            countActionCoolDown() {
+                this.interval.action = setInterval(() => {
+                    const now = new Date();
+                    this.timeRemain.action = this.currentPlayerInfo.lastAction + this.coolDown.action - now.getTime();
+                    // console.log(this.timeRemain.action);
+                }, this.refreshInterval);
+            },
         },
         watch: {
             async currentPlayer(n, o) {
@@ -156,6 +197,7 @@ if (document.querySelector('#app')) {
             this.parsePlayers();
             this.setCurrentPlayer();
             this.countFloorBonusCoolDown();
+            this.countActionCoolDown();
         },
     })
         .use(vueStore)

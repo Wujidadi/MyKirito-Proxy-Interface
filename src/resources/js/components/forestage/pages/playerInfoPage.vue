@@ -162,7 +162,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" v-html="teammateHtml"></td>
+                            <td colspan="3" v-html="$root.teammateHtml"></td>
                         </tr>
                         <tr>
                             <td colspan="3">對方也必須輸入你的暱稱，並且與你在相同的樓層。當雙方互相設定且同層數時隊伍將自動成立。隊伍僅於挑戰Boss時作用，只要有任一人挑戰Boss就會自動一起上陣</td>
@@ -171,7 +171,9 @@
                 </table>
             </div>
             <div class="field" id="floorBonus">
-                <h3 class="title">樓層獎勵</h3>
+                <h3 class="title">
+                    <span data-bs-toggle="tooltip" data-bs-placement="right" :data-bs-original-title="nextFloorBonusGettableTime">樓層獎勵</span>
+                </h3>
                 <table class="table table-borderless mb-0">
                     <caption>領取樓層獎勵</caption>
                     <tbody>
@@ -179,25 +181,32 @@
                             <td v-html="floorBonusHintHtml"></td>
                         </tr>
                         <tr>
-                            <button type="button" class="btn btn-negative action mt-2 px-3" :disabled="isDisabled('floorBonus')" @click="getFloorBonus">領取獎勵</button>
+                            <td>
+                                <button type="button" class="btn btn-negative action mt-2 px-3" :disabled="isDisabled('floorBonus')" @click="doAction('floorBonus')">領取獎勵</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="field" id="actions">
-                <h3 class="title">行動</h3>
+                <h3 class="title">
+                    <span data-bs-toggle="tooltip" data-bs-placement="right" :data-bs-original-title="nextActionTime">行動</span>
+                </h3>
                 <table class="table table-borderless mb-0">
                     <caption>行動（練功）</caption>
                     <tbody>
+                        <tr v-if="$root.timeRemain.action >= 0">
+                            <td>冷卻倒數：{{ Math.ceil($root.timeRemain.action / 1000) }} 秒，現在一般行動的CD為66秒，顯示不正確的請校準你電腦/手機的時間</td>
+                        </tr>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="huntRabbit">狩獵兔肉</button>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="selfTraining">自主訓練</button>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="goPicnic">外出野餐</button>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="chaseGirl">汁妹</button>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="doGood">做善事</button>
-                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" @click="sitRest">坐下休息</button>
-                                <button type="button" class="btn btn-negative action mt-2 px-3" @click="goFishing">釣魚</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('hunt2')">狩獵兔肉</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('train2')">自主訓練</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('eat2')">外出野餐</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('girl2')">汁妹</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('good2')">做善事</button>
+                                <button type="button" class="btn btn-negative action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('sit2')">坐下休息</button>
+                                <button type="button" class="btn btn-negative action mt-2 px-3" :disabled="isDisabled('action')" @click="doAction('fish2')">釣魚</button>
                             </td>
                         </tr>
                         <tr>
@@ -208,10 +217,10 @@
                         </tr>
                         <tr>
                             <td>
-                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(1)">修行1小時</button>
-                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(2)">修行2小時</button>
-                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" @click="practice(4)">修行4小時</button>
-                                <button type="button" class="btn btn-positive action mt-2 px-3" @click="practice(8)">修行8小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('1h')">修行1小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('2h')">修行2小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 me-2 px-3" :disabled="isDisabled('action')" @click="doAction('4h')">修行4小時</button>
+                                <button type="button" class="btn btn-positive action mt-2 px-3" :disabled="isDisabled('action')" @click="doAction('8h')">修行8小時</button>
                             </td>
                         </tr>
                     </tbody>
@@ -221,7 +230,18 @@
                 <h3 class="title">行動紀錄</h3>
                 <table class="table table-borderless mb-0">
                     <caption>行動及領取樓層獎勵紀錄</caption>
-                    <tbody></tbody>
+                    <tbody>
+                        <template v-if="checkCurrentPlayerRecord">
+                            <template v-for="(record, index) in actionRecords[$root.currentPlayer]" :key="index">
+                                <tr v-if="index > 0">
+                                    <td><hr class="separator" /></td>
+                                </tr>
+                                <tr>
+                                    <td v-html="record"></td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -234,7 +254,13 @@ import myDefs from '@/js/mylib/definitions';
 export default {
     name: 'PlayerInfoPage',
     data() {
-        return {};
+        return {
+            actionRecords: [],
+            isPressed: {
+                floorBonus: false,
+                action: false,
+            },
+        };
     },
     methods: {
         buildAttrHtml(attr) {
@@ -292,13 +318,13 @@ export default {
                     if (response.data && this.$root.checkApiResponseData(response) && this.$root.checkApiResponseError(response)) {
                         if (response.data.data[0].teammateUID) {
                             this.$root.alert('設定隊友', '設定成功');
+                            this.$root.currentPlayerInfo.teammateUID = response.data.data[0].teammateUID;
                             this.$root.currentPlayerInfo.teammate = this.$root.currentPlayerInfo.teammateNickname;
-                            this.$root.currentPlayerInfo.teammateUID = response.data.teammateUID;
                         } else {
                             if (this.$root.currentPlayerInfo.teammateUID) {
                                 this.$root.alert('設定隊友', '隊伍已解除');
-                                this.$root.currentPlayerInfo.teammate = '';
                                 this.$root.currentPlayerInfo.teammateUID = false;
+                                this.$root.currentPlayerInfo.teammate = '';
                             } else {
                                 console.log('隊友未變更');
                             }
@@ -309,6 +335,9 @@ export default {
                 })
                 .catch(error => {
                     this.$root.alert('設定隊友', this.$root.getErrorMessage(error.response));
+                })
+                .finally(() => {
+                    this.$root.buildTeammateHtml();
                 });
         },
         getFloorBonus() {
@@ -340,40 +369,91 @@ export default {
                     }
                 })
                 .catch(error => {
-                    this.$root.alert('設定隊友', this.$root.getErrorMessage(error.response));
+                    this.$root.alert('領取樓層獎勵', this.$root.getErrorMessage(error.response));
                 });
         },
-        huntRabbit() {
-            //
-        },
-        selfTraining() {
-            //
-        },
-        goPicnic() {
-            //
-        },
-        chaseGirl() {
-            //
-        },
-        doGood() {
-            //
-        },
-        sitRest() {
-            //
-        },
-        goFishing() {
-            //
-        },
-        practice(hour) {
-            //
+        doAction(action) {
+            let alertTitle = '行動';
+            let successMessage = '行動成功！';
+            if (action === 'floorBonus') {
+                alertTitle = '領取樓層獎勵';
+                successMessage = '領取成功！';
+            }
+            this.isPressed[action] = true;
+            axios({
+                method: this.$root.api.myKiritoApi.doAction.method,
+                url: `${this.$root.api.myKiritoApi.doAction.url}?player=${this.$root.currentPlayer}`,
+                headers: {
+                    'content-type': myDefs.commonJsonContentType,
+                    authorization: `Bearer ${localStorage.getItem('Token')}`,
+                },
+                data: {
+                    action: action,
+                },
+            })
+                .then(response => {
+                    if (response.data && this.$root.checkApiResponseData(response) && this.$root.checkApiResponseError(response)) {
+                        if (response.data.data[0].message === successMessage && response.data.data[0].myKirito) {
+                            const result = response.data.data[0].myKirito;
+                            this.$root.currentPlayerInfo.exp = result.exp;
+                            this.$root.currentPlayerInfo.lv = result.lv;
+                            this.$root.currentPlayerInfo.lastAction = result.lastAction;
+                            this.$root.currentPlayerInfo.lastFloorBonus = result.lastFloorBonus;
+                            this.$root.currentPlayerInfo.actionCount = result.actionCount;
+                            const timestamp = action === 'floorBonus' ? result.lastFloorBonus : result.lastAction;
+                            const recordTime = moment(timestamp).format('YYYY-MM-DD HH:mm:ss.SSS');
+                            const gained = response.data.data[0].gained;
+                            if (!this.checkCurrentPlayerRecord) {
+                                this.actionRecords[this.$root.currentPlayer] = [];
+                            }
+                            let newRecord = `[${recordTime}] ${successMessage}獲得了 ${gained.exp} 點經驗值`;
+                            if (gained.prevLV !== gained.nextLV) {
+                                newRecord += `，等級已提升至 ${gained.nextLV}！能力變化如下：<br />` +
+                                    `HP +${gained.hp || 0}<br />` +
+                                    `攻擊 +${gained.atk || 0}<br />` +
+                                    `防禦 +${gained.def || 0}<br />` +
+                                    `體力 +${gained.stm || 0}<br />` +
+                                    `敏捷 +${gained.agi || 0}<br />` +
+                                    `反應速度 +${gained.spd || 0}<br />` +
+                                    `技巧 +${gained.tec || 0}<br />` +
+                                    `智力 +${gained.int || 0}<br />` +
+                                    `幸運 +${gained.luck || 0}`;
+                            }
+                            if (gained.nextTitle && gained.prevTitle !== gained.nextTitle) {
+                                newRecord += `稱號由 ${gained.prevTitle} 變更為 ${gained.nextTitle}！`;
+                            }
+                            this.actionRecords[this.$root.currentPlayer].push(newRecord);
+                            this.isPressed[action] = false;
+                        } else {
+                            console.warn(`${alertTitle}特別狀況:`, response);
+                        }
+                    } else {
+                        console.warn(response);
+                    }
+                })
+                .catch(error => {
+                    this.$root.alert(alertTitle, this.$root.getErrorMessage(error.response));
+                })
+                .finally(() => {
+                    if (this.isPressed[action]) {
+                        setTimeout(() => {
+                            this.isPressed[action] = false;
+                        }, this.$root.refreshInterval * 2);
+                    }
+                });
         },
         isDisabled(action) {
-            switch (action) {
-                case 'floorBonus':
-                    if (this.$root.timeRemain.floorBonus > 0 || this.$root.currentPlayerInfo.floor < 1) {
-                        return true;
-                    }
-                    break;
+            if (this.$root.isSwitchingPlayer) {
+                return true;
+            }
+            if (this.isPressed[action]) {
+                return true;
+            }
+            if (action === 'floorBonus' && this.$root.currentPlayerInfo.floor < 1) {
+                return true;
+            }
+            if (this.$root.timeRemain[action] > 0) {
+                return true;
             }
             return false;
         },
@@ -410,15 +490,6 @@ export default {
             }
             return null;
         },
-        teammateHtml() {
-            const baseUrl = myDefs.myKiritoUrl.base;
-            const uid = this.$root.currentPlayerInfo.teammateUID;
-            const teammate = this.$root.currentPlayerInfo.teammate;
-            if (uid) {
-                return `隊伍狀態：<a class="teammate" target="_blank" href="${baseUrl}/profile/${uid}">${teammate}</a>`;
-            }
-            return '隊伍狀態：無';
-        },
         floorBonusHintHtml() {
             if (this.$root.timeRemain.floorBonus < 0) {
                 return `每 4 小時可以依目前樓層數領取獎勵經驗值 (×100)。目前樓層 ${this.$root.currentPlayerInfo.floor}`;
@@ -427,8 +498,25 @@ export default {
                 return `冷卻倒數：${timeRemain} 秒`;
             }
         },
+        nextFloorBonusGettableTime() {
+            if (this.$root.timeRemain.floorBonus >= 0) {
+                return '下次可領取時間：' + moment(this.$root.currentPlayerInfo.lastFloorBonus + this.$root.coolDown.floorBonus).format('YYYY-MM-DD HH:mm:ss.SSS');
+            }
+            return null;
+        },
+        nextActionTime() {
+            if (this.$root.timeRemain.action >= 0) {
+                return '下次可行動時間：' + moment(this.$root.currentPlayerInfo.lastAction + this.$root.coolDown.action).format('YYYY-MM-DD HH:mm:ss.SSS');
+            }
+            return null;
+        },
+        checkCurrentPlayerRecord() {
+            return this.actionRecords[this.$root.currentPlayer] && this.actionRecords[this.$root.currentPlayer] instanceof Array;
+        },
     },
-    mounted() {},
+    mounted() {
+        this.$root.tooltip();
+    },
 };
 </script>
 
