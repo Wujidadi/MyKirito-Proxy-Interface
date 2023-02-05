@@ -10,7 +10,7 @@
                             <th class="head-1" scope="col">暱稱</th>
                             <td class="content-1" :class="colorName">{{ $root.currentPlayerInfo.nickname }}</td>
                             <td class="avatar text-center" colspan="2" rowspan="4">
-                                <img class="personal-info-avatar" :src="$root.getAvatarUrl($root.currentPlayerInfo.avatar)" :alt="$root.getAvatarAlt($root.currentPlayerInfo.character, $root.currentPlayerInfo.title)" />
+                                <img class="personal-info-avatar" :src="$root.getAvatarUrl($root.currentPlayerInfo.avatar)" v-if="$root.currentPlayerInfo.avatar !== ''" v-cloak/>
                             </td>
                         </tr>
                         <tr class="beside-avatar">
