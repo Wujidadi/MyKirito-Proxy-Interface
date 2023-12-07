@@ -24,7 +24,7 @@
                         <input type="checkbox" class="form-check-input" id="rememberMe" v-model="rememberMe" />
                     </div>
                     <div class="col-auto ps-0">
-                        <label for="rememberMe" class="col-form-label">記住我</label>
+                        <label for="rememberMe" class="col-form-label">記住我1111</label>
                     </div>
                 </div>
                 <div class="d-flex justify-content-end">
