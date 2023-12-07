@@ -21,6 +21,7 @@ services:
         ports:
             - ${PORT_MAIN:-80}:80
             - ${PORT_MAIN_OCTANE:-8000}:8000  # Port assigned in supervisord.conf has higher priority
+            - ${PORT_MAIN_VITE:-5173}:48757 # For npm run dev (vite)
         working_dir: ${CONTAINER_WORKDIR_MAIN}
         command: >
             bash -c "cron start;

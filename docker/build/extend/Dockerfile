@@ -1,4 +1,4 @@
-FROM wujidadi/nginx-php:2.2
+FROM wujidadi/nginx-php:2.11
 
 ARG phpversion=8.2
 
